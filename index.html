@@ -10,12 +10,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Neutrals -->
-    <!-- Application Structure Plan: The application is structured as a single-page, vertical timeline, progressing chronologically through philosophical periods and then into specific branches of philosophy, concluding with a modern ethical dilemma. A sticky navigation bar allows users to jump between these eras and topics. This structure was chosen to logically sequence historical periods and core philosophical branches before applying these concepts to a contemporary issue, providing a clear path from foundational theory to practical application. Each topic is presented in a self-contained "card" with a toggle-able "Elaborate" section to manage information density. -->
+    <!-- Application Structure Plan: The application is structured as a single-page, vertical timeline, progressing chronologically through philosophical periods, then into specific branches of philosophy, and concluding with modern ethical dilemmas like abortion and euthanasia. A sticky navigation bar allows users to jump between these sections. This structure was chosen to logically sequence historical periods and core philosophical branches before applying these concepts to contemporary issues, providing a clear path from foundational theory to practical application. Each topic is presented in a self-contained "card" with a toggle-able "Elaborate" section to manage information density. -->
     <!-- Visualization & Content Choices: 
         - Report Info: Timeline of Philosophy -> Goal: Organize -> Viz/Presentation Method: Sticky Nav Bar & Vertical Sections -> Interaction: Click to scroll -> Justification: Provides clear structure and easy navigation through the content. -> Library/Method: HTML/JS.
         - Report Info: Core tenets of each topic -> Goal: Inform -> Viz/Presentation Method: Expandable content cards -> Interaction: Click to reveal detailed elaboration -> Justification: Manages information density and encourages active engagement. -> Library/Method: HTML/JS.
-        - Report Info: Pro-Life vs. Pro-Choice Arguments -> Goal: Compare -> Viz/Presentation Method: Interactive toggle switch -> Interaction: Click to switch between Pro-Life and Pro-Choice viewpoints -> Justification: This provides a clear, direct, and engaging way for the user to compare the core tenets of two opposing and complex ethical stances. -> Library/Method: HTML/JS.
-        - Report Info: Mill's Utilitarianism vs. Kant's Deontology -> Goal: Compare -> Viz/Presentation Method: Interactive balance scale -> Interaction: Click on each side to see the core principle of each ethical theory weighed against the other -> Justification: Uses a powerful visual metaphor to contrast consequence-based ethics with duty-based ethics. -> Library/Method: HTML/JS.
+        - Report Info: Arguments for/against Euthanasia -> Goal: Compare -> Viz/Presentation Method: Interactive tabs -> Interaction: Click tabs for 'Arguments For' and 'Arguments Against' to display relevant points -> Justification: Allows for a clear, side-by-side comparison of the core arguments in the euthanasia debate, making the complex topic easier to navigate and understand. -> Library/Method: HTML/JS.
+        - Report Info: Pro-Life vs. Pro-Choice Arguments -> Goal: Compare -> Viz/Presentation Method: Interactive toggle switch -> Interaction: Click to switch between viewpoints -> Justification: Provides a direct and engaging way to compare the core tenets of two opposing ethical stances. -> Library/Method: HTML/JS.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
@@ -50,7 +50,7 @@
             transition: max-height 0.7s ease-in-out;
         }
         .elaboration.show {
-            max-height: 2500px;
+            max-height: 3500px;
         }
         .comparison-table th, .comparison-table td {
             border: 1px solid #e5e7eb;
@@ -75,6 +75,30 @@
             padding: 1rem;
             border-radius: 0 0 0.5rem 0.5rem;
         }
+        #stance-toggle:checked ~ #stance-dot {
+            transform: translateX(1.5rem);
+            background-color: #DC2626;
+        }
+        #stance-toggle:checked ~ .bg-gray-600 {
+            background-color: #FEE2E2;
+        }
+        #stance-dot {
+            background-color: #3B82F6;
+        }
+        .bg-gray-600 {
+             background-color: #DBEAFE;
+        }
+        .euthanasia-tab {
+            cursor: pointer;
+            padding: 8px 16px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        .euthanasia-tab.active {
+            border-bottom-color: #D97706;
+            color: #D97706;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body id="top" class="antialiased">
@@ -93,6 +117,7 @@
                 <a href="#logical" class="nav-link text-lg font-medium text-gray-600">Logical</a>
                 <a href="#ethical" class="nav-link text-lg font-medium text-gray-600">Ethical</a>
                 <a href="#abortion" class="nav-link text-lg font-medium text-gray-600">Abortion</a>
+                <a href="#euthanasia" class="nav-link text-lg font-medium text-gray-600">Euthanasia</a>
             </nav>
         </div>
     </header>
@@ -553,8 +578,8 @@
                             <p class="font-semibold text-gray-800">Q1: What are the three main arguments used by the "Pro-Life" side?</p>
                             <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
                                 <li><strong>Sanctity of Life:</strong> The belief that human life is sacred from the moment of conception and should never be intentionally terminated.</li>
-                                <li><strong>Sentience Criterion:</strong> The argument that if a fetus can feel pleasure and pain, it is morally wrong to kill it.</li>
-                                <li><strong>Potential Personhood:</strong> The argument that because a fetus has the potential to become a full person, it possesses a right to life from the beginning.</li>
+                                <li><strong>Potential Personhood:</strong> The argument that because a fetus has the potential to become a person with full rights, consciousness, and experiences. This potential grants it a right to life from the start.</li>
+                                <li><strong>Sentience Criterion:</strong> The argument that if a fetus can feel pain (which some argue can happen at various stages of development), it is morally wrong to cause it suffering and death.</li>
                             </ul>
                         </div>
                         <div>
@@ -563,6 +588,119 @@
                                 <li><strong>Undesirable Consequences:</strong> Prohibiting abortion leads to unsafe, illegal procedures and social inequality for women.</li>
                                 <li><strong>Bodily Autonomy:</strong> Women have a fundamental moral right to make decisions about their own bodies and reproductive health.</li>
                                 <li><strong>Fetal Personhood:</strong> The argument that a fetus is not yet a "person" with full moral rights, and therefore a woman's right to life and well-being takes precedence.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EUTHANASIA -->
+        <section id="euthanasia" class="mb-20 pt-16">
+            <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">The Euthanasia Debate</h2>
+            <p class="text-center text-gray-600 text-lg mb-10">The Right to a "Good Death"</p>
+            <div class="space-y-8">
+                <div class="content-card p-6">
+                    <h3 class="text-2xl font-semibold mb-3">Defining Euthanasia</h3>
+                    <p class="mb-4">Euthanasia, or "mercy killing," is the act of intentionally ending a person's life to relieve their suffering. It is a complex ethical issue with several important distinctions. Click the tabs below to explore the main arguments and types.</p>
+                    <div class="border-b border-gray-200">
+                        <nav class="-mb-px flex space-x-6" aria-label="Tabs">
+                            <button class="euthanasia-tab active" data-tab="arguments">Arguments</button>
+                            <button class="euthanasia-tab" data-tab="types">Types & Forms</button>
+                        </nav>
+                    </div>
+                    <div id="euthanasia-arguments" class="euthanasia-content mt-4">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                                <h4 class="font-semibold text-green-800 mb-2">Arguments For Euthanasia</h4>
+                                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                    <li><strong>Mercy:</strong> Provides a compassionate end to unbearable and hopeless suffering from a terminal or incurable disease.</li>
+                                    <li><strong>Respect for Autonomy:</strong> Honors an individual's rational decision to control their own life and death, a principle rooted in the philosophies of thinkers like Kant and Mill.</li>
+                                </ul>
+                            </div>
+                             <div class="p-4 bg-red-50 rounded-lg border border-red-200">
+                                <h4 class="font-semibold text-red-800 mb-2">Arguments Against Euthanasia</h4>
+                                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                    <li><strong>Sanctity of Human Life:</strong> The belief that all human life has inherent worth and dignity, and that only God has the right to take a life.</li>
+                                    <li><strong>Slippery Slope:</strong> The fear that legalizing voluntary euthanasia will inevitably lead to the acceptance of non-voluntary or involuntary euthanasia, and unjustified killings.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="euthanasia-types" class="euthanasia-content mt-4 hidden">
+                         <ul class="list-disc list-inside space-y-2 text-gray-700">
+                            <li><strong>Voluntary:</strong> Performed at the explicit request of a person of sound mind.</li>
+                            <li><strong>Non-voluntary:</strong> Performed when a person is unable to give consent (e.g., in a permanent vegetative state).</li>
+                            <li><strong>Active vs. Passive:</strong> Active euthanasia involves a direct action (e.g., a lethal injection), while passive euthanasia involves withholding life-sustaining treatment. In 2018, India's Supreme Court legalized passive euthanasia.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="content-card p-6">
+                    <h3 class="text-2xl font-semibold mb-3">Case Studies in Euthanasia</h3>
+                    <p class="mb-4">These real and hypothetical cases highlight the profound ethical challenges surrounding the right to die. Click to see a philosophical analysis of each case.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Case 1: The Paralyzed Man</h4>
+                            <p class="text-sm text-gray-600">Robert, paralyzed and in great pain after an accident, begs his family to end his life. His brother complies and shoots him. The brother is acquitted of murder by reason of temporary insanity.</p>
+                            <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">My Analysis ▼</button>
+                            <div class="elaboration mt-2 border-t pt-2 text-sm">
+                                <ul class="list-disc list-inside space-y-1">
+                                    <li><strong>Was it moral?</strong> This is an act of voluntary active euthanasia, though illegal. From a utilitarian perspective (Mill), the brother acted to end extreme suffering, potentially maximizing well-being by ending Robert's pain. From a deontological perspective (Kant), the brother violated the universal law against killing, regardless of his compassionate motive. A virtue ethicist (Aristotle) would question if this act reflected virtues like compassion or a vice like rashness.</li>
+                                    <li><strong>Should he have been tried/acquitted?</strong> The trial reflects society's legal prohibition against killing. The acquittal suggests the jury sympathized with the extreme emotional distress (temporary insanity), prioritizing the motive of mercy over the letter of the law. This highlights the conflict between law and perceived moral duty.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Case 2: The Prisoner's Request</h4>
+                            <p class="text-sm text-gray-600">Frank Van Den Bleeken, a convicted murderer in Belgium, is granted the right to die based on unbearable psychological suffering, but the procedure is canceled.</p>
+                             <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">My Analysis ▼</button>
+                            <div class="elaboration mt-2 border-t pt-2 text-sm">
+                                <ul class="list-disc list-inside space-y-1">
+                                     <li><strong>Was the request justified?</strong> From a perspective of pure autonomy, Bleeken was making a rational choice about his own life based on his subjective experience of suffering. However, this case tests the limits of "unbearable suffering." Is psychological suffering in prison equivalent to a terminal illness?</li>
+                                     <li><strong>Right to die vs. languishing in prison:</strong> This pits the principle of autonomy against the principle of retributive justice. The victims' family sees his continued life in prison as the just punishment for his crimes. A utilitarian might argue that granting his request offers no benefit to society and causes further pain to the victims' family, thus decreasing overall happiness.</li>
+                                </ul>
+                            </div>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold">Case 3 & 4: The Elderly Couple & The Scientist</h4>
+                            <p class="text-sm text-gray-600">An elderly Indian couple and a 104-year-old Australian scientist, none of whom are terminally ill, seek euthanasia due to a deteriorating quality of life and a fear of future suffering.</p>
+                             <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">My Analysis ▼</button>
+                            <div class="elaboration mt-2 border-t pt-2 text-sm">
+                                <p>These cases challenge the common requirement that euthanasia only be considered for the terminally ill. They shift the focus from "imminent death" to "quality of life" and autonomy.</p>
+                                <ul class="list-disc list-inside space-y-1">
+                                     <li><strong>Moral Justification:</strong> Both the couple and the scientist are making a rational, considered choice based on their own values and assessment of their lives. This aligns with Mill's argument for individual liberty.</li>
+                                     <li><strong>The "Slippery Slope":</strong> Opponents would argue these cases are prime examples of the slippery slope. If euthanasia is allowed for non-terminal conditions, where does society draw the line? Does it open the door to euthanasia for depression, disability, or simply being "tired of life"? This is a central fear for those who argue against legalization.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card p-6 bg-amber-50 border-amber-200">
+                    <h3 class="text-2xl font-semibold mb-3 text-amber-800">Questions & Answers: The Euthanasia Debate</h3>
+                    <p class="mb-4">Test your knowledge of the key arguments in the euthanasia debate.</p>
+                    <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Show Q&A ▼</button>
+                    <div class="elaboration mt-4 border-t pt-4 space-y-4">
+                        <div>
+                            <p class="font-semibold text-gray-800">Q1: What are the two primary principles used to argue in favor of euthanasia?</p>
+                            <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
+                                <li><strong>Mercy:</strong> The argument that it is a compassionate act to end the unbearable and hopeless suffering of a patient.</li>
+                                <li><strong>Respect for Autonomy:</strong> The argument that individuals have the right to self-rule and make their own rational decisions about their life and death.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-800">Q2: What is the "slippery slope" argument against euthanasia?</p>
+                             <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
+                                <li>It is the argument that if society legalizes euthanasia in justified cases (like for terminally ill patients in great pain), it will inevitably lead to the acceptance and practice of euthanasia in unjustified cases.</li>
+                                <li>The fear is that the initial moral reasons (mercy and autonomy) will be expanded or ignored, leading down a "slippery slope" to non-voluntary or even involuntary euthanasia.</li>
+                            </ul>
+                        </div>
+                         <div>
+                            <p class="font-semibold text-gray-800">Q3: Explain the difference between active and passive euthanasia.</p>
+                             <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
+                                <li><strong>Active Euthanasia:</strong> Involves taking a direct action to end a life, such as administering a lethal injection. It is an act of "killing".</li>
+                                <li><strong>Passive Euthanasia:</strong> Involves withholding or withdrawing life-sustaining treatment, allowing the person to die from their underlying condition. It is an act of "letting die".</li>
                             </ul>
                         </div>
                     </div>
@@ -594,9 +732,9 @@
                     const elaboration = button.nextElementSibling;
                     const isShown = elaboration.classList.toggle('show');
                     if (!isShown) {
-                        button.textContent = button.textContent.includes('Q&A') ? 'Show Q&A ▼' : 'Elaborate ▼';
+                        button.textContent = button.textContent.includes('Q&A') ? 'Show Q&A ▼' : (button.textContent.includes('Analysis') ? 'My Analysis ▼' : 'Elaborate ▼');
                     } else {
-                        button.textContent = button.textContent.includes('Q&A') ? 'Hide Q&A ▲' : 'Collapse ▲';
+                        button.textContent = button.textContent.includes('Q&A') ? 'Hide Q&A ▲' : (button.textContent.includes('Analysis') ? 'Hide Analysis ▲' : 'Collapse ▲');
                     }
                 });
             });
@@ -715,7 +853,6 @@
             const argumentDisplay = document.getElementById('argument-display');
             const proLifeLabel = document.getElementById('pro-life-label');
             const proChoiceLabel = document.getElementById('pro-choice-label');
-            const stanceDot = document.getElementById('stance-dot');
 
             const proLifeArgs = `
                 <h4 class="font-semibold text-blue-600 mb-2">Pro-Life Arguments</h4>
@@ -734,27 +871,46 @@
                 </ul>`;
 
             function updateStanceDisplay() {
-                if (stanceToggle.checked) {
+                if(stanceToggle.checked) {
                     argumentDisplay.innerHTML = proChoiceArgs;
                     proChoiceLabel.classList.remove('text-gray-400');
                     proChoiceLabel.classList.add('text-red-600');
                     proLifeLabel.classList.add('text-gray-400');
                     proLifeLabel.classList.remove('text-blue-600');
-                    stanceDot.style.transform = 'translateX(1.5rem)';
-
                 } else {
                     argumentDisplay.innerHTML = proLifeArgs;
                     proLifeLabel.classList.remove('text-gray-400');
                     proLifeLabel.classList.add('text-blue-600');
                     proChoiceLabel.classList.add('text-gray-400');
                     proChoiceLabel.classList.remove('text-red-600');
-                    stanceDot.style.transform = 'translateX(0)';
                 }
             }
 
             if(stanceToggle && argumentDisplay){
                  stanceToggle.addEventListener('change', updateStanceDisplay);
                  updateStanceDisplay(); // Initial display
+            }
+
+            // Euthanasia tabs
+            const euthanasiaTabs = document.querySelectorAll('.euthanasia-tab');
+            const euthanasiaContents = document.querySelectorAll('.euthanasia-content');
+
+            if(euthanasiaTabs.length > 0) {
+                euthanasiaTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        euthanasiaTabs.forEach(item => item.classList.remove('active'));
+                        tab.classList.add('active');
+                        
+                        const targetId = tab.dataset.tab;
+                        euthanasiaContents.forEach(content => {
+                            if (content.id === `euthanasia-${targetId}`) {
+                                content.classList.remove('hidden');
+                            } else {
+                                content.classList.add('hidden');
+                            }
+                        });
+                    });
+                });
             }
         });
     </script>
