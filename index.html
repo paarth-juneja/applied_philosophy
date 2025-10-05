@@ -14,8 +14,9 @@
     <!-- Visualization & Content Choices: 
         - Report Info: Timeline of Philosophy -> Goal: Organize -> Viz/Presentation Method: Sticky Nav Bar & Vertical Sections -> Interaction: Click to scroll -> Justification: Provides clear structure and easy navigation through the content. -> Library/Method: HTML/JS.
         - Report Info: Core tenets of each topic -> Goal: Inform -> Viz/Presentation Method: Expandable content cards -> Interaction: Click to reveal detailed elaboration -> Justification: Manages information density and encourages active engagement. -> Library/Method: HTML/JS.
-        - Report Info: Arguments for/against Euthanasia -> Goal: Compare -> Viz/Presentation Method: Interactive tabs -> Interaction: Click tabs for 'Arguments For' and 'Arguments Against' to display relevant points -> Justification: Allows for a clear, side-by-side comparison of the core arguments in the euthanasia debate, making the complex topic easier to navigate and understand. -> Library/Method: HTML/JS.
-        - Report Info: Pro-Life vs. Pro-Choice Arguments -> Goal: Compare -> Viz/Presentation Method: Interactive toggle switch -> Interaction: Click to switch between viewpoints -> Justification: Provides a direct and engaging way to compare the core tenets of two opposing ethical stances. -> Library/Method: HTML/JS.
+        - Report Info: Freud's Models of the Mind -> Goal: Compare/Inform -> Viz/Presentation Method: Two-column layout with static text for the Structural Model and an interactive timeline for the Psychogenetic Model -> Interaction: Click on stages to reveal details -> Justification: Restored the original text for the structural model and combined it with the interactive developmental timeline, presenting both key Freudian concepts side-by-side as requested by the user for a comprehensive overview. -> Library/Method: HTML/JS.
+        - Report Info: Arguments for/against Euthanasia -> Goal: Compare -> Viz/Presentation Method: Interactive tabs -> Interaction: Click tabs for 'Arguments For' and 'Arguments Against' -> Justification: Allows for a clear, side-by-side comparison of the core arguments in the euthanasia debate. -> Library/Method: HTML/JS.
+        - Report Info: Pro-Life vs. Pro-Choice Arguments -> Goal: Compare -> Viz/Presentation Method: Interactive toggle switch -> Interaction: Click to switch between viewpoints -> Justification: Provides a direct and engaging way to compare two opposing ethical stances. -> Library/Method: HTML/JS.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
@@ -98,6 +99,14 @@
             border-bottom-color: #D97706;
             color: #D97706;
             font-weight: 600;
+        }
+        .stage-btn {
+            transition: all 0.3s ease;
+        }
+        .stage-btn.active {
+            background-color: #D97706;
+            color: white;
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -182,7 +191,7 @@
                         </div>
                         <div>
                             <h4 class="font-semibold text-lg text-gray-800">My Conclusion</h4>
-                            <p>The court's suggestion, while understandable as an expression of profound frustration, is ethically problematic from multiple philosophical standpoints. While corruption is a grievous harm to society, the finality and severity of the death penalty are disproportionate for a non-violent crime. A Utilitarian cost-benefit analysis is inconclusive at best, a Kantian analysis would likely condemn it for using a person as a means to an end, and a Virtue Ethics approach would favor a more balanced and rehabilitative solution. A more virtuous and sustainable path would be to focus on systemic reforms that promote transparency and accountability, rather than resorting to an extreme and irreversible punishment.</p>
+                            <p>The court's suggestion, while understandable as an expression of profound frustration, is ethically problematic from multiple standpoints. While corruption is a grievous harm to society, the finality and severity of the death penalty are disproportionate for a non-violent crime. A Utilitarian cost-benefit analysis is inconclusive at best, a Kantian analysis would likely condemn it for using a person as a means to an end, and a Virtue Ethics approach would favor a more balanced and rehabilitative solution. A more virtuous and sustainable path would be to focus on systemic reforms that promote transparency and accountability, rather than resorting to an extreme and irreversible punishment.</p>
                         </div>
                     </div>
                 </div>
@@ -313,33 +322,42 @@
 
                 <div class="content-card p-6">
                     <h3 class="text-2xl font-semibold mb-3">Sigmund Freud and Psychoanalysis</h3>
-                    <p class="mb-4">Freud revolutionized our understanding of the human mind. He proposed that our conscious thoughts and actions are heavily influenced by unconscious desires, memories, and conflicts, many of which are rooted in early childhood experiences.</p>
+                    <p class="mb-4">Freud revolutionized our understanding of the human mind. He proposed that our conscious thoughts and actions are heavily influenced by unconscious desires and conflicts. He developed two key models to explain this: the structural model (Id, Ego, Superego) and the psychogenetic model of development.</p>
                     <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Elaborate ▼</button>
                     <div class="elaboration mt-4 border-t pt-4">
-                        <div class="lg:flex lg:gap-8">
-                            <div class="lg:w-1/2">
-                                <p><strong>Dynamics of the Human Mind:</strong> Freud structured the psyche into three parts:</p>
-                                <ul class="list-disc list-inside mt-2 space-y-1">
+                        <div class="lg:grid lg:grid-cols-2 lg:gap-8">
+                            <!-- Column 1: Dynamics of the Human Mind -->
+                            <div class="p-4 bg-gray-50 rounded-lg">
+                                <h4 class="font-semibold text-center mb-2">Dynamics of the Mind (Structural Model)</h4>
+                                 <p>Freud structured the psyche into three conflicting parts:</p>
+                                <ul class="list-disc list-inside mt-2 space-y-1 text-sm">
                                     <li><strong class="text-red-600">Id (Pleasure Principle):</strong> The primitive, instinctual part of the mind containing sexual and aggressive drives. It seeks immediate gratification for all desires, wants, and needs.</li>
                                     <li><strong class="text-blue-600">Ego (Reality Principle):</strong> The rational part of the psyche. It mediates between the unrealistic demands of the id and the external world, ensuring that the id's impulses can be expressed in a manner acceptable in the real world.</li>
                                     <li><strong class="text-yellow-600">Superego (Moral Principle):</strong> The moral conscience, incorporating the values and morals of society which are learned from one's parents and others. It strives for perfection and can punish the ego through feelings of guilt.</li>
                                 </ul>
-                                <p class="mt-3">Freud compared the mind to an iceberg. The small tip above the water is the <strong class="text-cyan-500">conscious</strong> mind. The much larger mass below the water is the <strong class="text-indigo-700">unconscious</strong>, which stores our repressed fears, desires, and memories. The preconscious is the area just below the surface, containing memories that are not conscious but can be easily recalled.</p>
+                                <p class="mt-3 text-sm">Freud compared the mind to an iceberg. The small tip above the water is the <strong class="text-cyan-500">conscious</strong> mind. The much larger mass below the water is the <strong class="text-indigo-700">unconscious</strong>, which stores our repressed fears, desires, and memories. The preconscious is the area just below the surface, containing memories that are not conscious but can be easily recalled.</p>
                             </div>
-                             <div class="lg:w-1/2 mt-6 lg:mt-0 p-4 bg-gray-50 rounded-lg">
-                                <h4 class="font-semibold text-center mb-2">Interactive Mind Model (Iceberg)</h4>
-                                <p id="freud-display" class="text-center h-20 bg-white p-2 rounded border">Click on a component to learn more.</p>
-                                <div class="relative w-full h-48 mt-4">
-                                    <div class="freud-component absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-1/4 bg-cyan-300 rounded-t-lg cursor-pointer flex items-center justify-center font-bold" data-text="The Conscious mind is what we are aware of at any given moment. It includes our current thoughts, feelings, and perceptions. This represents the Ego's outward-facing reality.">Conscious (Ego)</div>
-                                    <div class="freud-component absolute top-1/4 left-1/2 -translate-x-1/2 w-3/4 h-3/4 bg-indigo-300 rounded-b-lg cursor-pointer flex flex-col items-center justify-center p-2 text-center" data-text="The Unconscious is a vast reservoir of feelings, thoughts, and memories outside of our conscious awareness. It is driven by the primal Id and policed by the Superego.">
-                                        <div class="font-bold">Unconscious</div>
-                                        <div>(Id, Superego)</div>
+                            <!-- Column 2: Psychogenetic Model -->
+                             <div class="p-4 bg-gray-50 rounded-lg mt-8 lg:mt-0">
+                                <h4 class="font-semibold text-center mb-2">Psychogenetic Model of Development</h4>
+                                <p>Freud proposed that personality develops through five 'psychosexual stages'. Fixation at any stage can influence adult personality. Click on a stage to learn more.</p>
+                                <div class="mt-4">
+                                    <div class="flex flex-wrap justify-center gap-2 mb-4">
+                                        <button class="stage-btn active bg-gray-200 px-3 py-1 rounded-full text-xs font-semibold" data-stage="oral">Oral</button>
+                                        <button class="stage-btn bg-gray-200 px-3 py-1 rounded-full text-xs font-semibold" data-stage="anal">Anal</button>
+                                        <button class="stage-btn bg-gray-200 px-3 py-1 rounded-full text-xs font-semibold" data-stage="phallic">Phallic</button>
+                                        <button class="stage-btn bg-gray-200 px-3 py-1 rounded-full text-xs font-semibold" data-stage="latency">Latency</button>
+                                        <button class="stage-btn bg-gray-200 px-3 py-1 rounded-full text-xs font-semibold" data-stage="genital">Genital</button>
+                                    </div>
+                                    <div id="stage-display" class="p-3 bg-white rounded-lg border min-h-[200px] text-sm">
+                                        <!-- Stage details will be injected here by JS -->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
 
                 <div class="content-card p-6">
                     <h3 class="text-2xl font-semibold mb-3">Jean-Paul Sartre and Existentialism</h3>
@@ -371,11 +389,10 @@
                     <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Show Q&A ▼</button>
                     <div class="elaboration mt-4 border-t pt-4 space-y-4">
                         <div>
-                            <p class="font-semibold text-gray-800">Q1: Describe the three parts of the psyche according to Freud's model.</p>
+                            <p class="font-semibold text-gray-800">Q1: What is the main conflict at each of Freud's psychosexual stages?</p>
                             <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
-                                <li><strong>Id:</strong> The primitive, instinctual component. It operates on the "pleasure principle," seeking immediate gratification for all urges and desires. It is entirely unconscious.</li>
-                                <li><strong>Ego:</strong> The rational mediator. It operates on the "reality principle," balancing the Id's demands with the morals of the Superego and the constraints of the external world.</li>
-                                <li><strong>Superego:</strong> The moral conscience. It represents internalized societal and parental standards of right and wrong, striving for perfection and inducing feelings of guilt.</li>
+                                <li>The main conflict at each stage is between the individual's instinctual desires (libido) focused on a specific erogenous zone and the social rules or parental demands that seek to control these desires.</li>
+                                <li>Successful resolution involves finding a balance, while failure to resolve the conflict can lead to personality 'fixations' in adulthood.</li>
                             </ul>
                         </div>
                         <div>
@@ -620,7 +637,7 @@
                             <p class="font-semibold text-gray-800">Q1: What are the three main arguments used by the "Pro-Life" side?</p>
                             <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
                                 <li><strong>Sanctity of Life:</strong> The belief that human life is sacred from the moment of conception and should never be intentionally terminated.</li>
-                                <li><strong>Potential Personhood:</strong> The argument that because a fetus has the potential to become a person with full rights, consciousness, and experiences, this potential grants it a right to life from the start.</li>
+                                <li><strong>Potential Personhood:</strong> The argument that because a fetus has the potential to become a person with full rights, consciousness, and experiences. This potential grants it a right to life from the start.</li>
                                 <li><strong>Sentience Criterion:</strong> The argument that if a fetus can feel pain (which some argue can happen at various stages of development), it is morally wrong to cause it suffering and death.</li>
                             </ul>
                         </div>
@@ -778,196 +795,4 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-
-            const toggleButtons = document.querySelectorAll('.toggle-btn');
-            toggleButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const elaboration = button.nextElementSibling;
-                    const isShown = elaboration.classList.toggle('show');
-                    if (!isShown) {
-                        button.textContent = button.textContent.includes('Q&A') ? 'Show Q&A ▼' : (button.textContent.includes('Analyze') ? 'Analyze the Case'+(button.textContent.includes('s') ? 's' : '')+' ▼' : 'Elaborate ▼');
-                    } else {
-                        button.textContent = button.textContent.includes('Q&A') ? 'Hide Q&A ▲' : (button.textContent.includes('Analyze') ? 'Hide Analysis ▲' : 'Collapse ▲');
-                    }
-                });
-            });
-
-            const navLinks = document.querySelectorAll('.nav-link');
-            const sections = document.querySelectorAll('section[id]');
-            
-            function onScroll() {
-                let currentSection = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    if (pageYOffset >= sectionTop - 150) {
-                        currentSection = section.getAttribute('id');
-                    }
-                });
-
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href').substring(1) === currentSection) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-
-            window.addEventListener('scroll', onScroll);
-
-
-            // Interactive Table Logic
-            const tableRows = document.querySelectorAll('.table-row');
-            const detailsBox = document.getElementById('details-box');
-            let lastSelectedRow = null;
-
-            const detailsContent = {
-                knowledge: {
-                    title: 'On the Source of Knowledge',
-                    descartes: `A true rationalist, Descartes believed that reason is the only path to certain knowledge. As "Sophie's World" explains, he could not trust his senses, which could be as deceptive as a dream. True knowledge had to be built upon a foundation of indubitable truths accessible only to the intellect, like the truths of mathematics.`,
-                    hume: `Hume argued that the mind is empty until filled by experience. "Sophie's World" notes his belief that everything we know is composed of 'impressions' (direct sensations) and 'ideas' (faint copies of impressions). If an idea cannot be traced back to a specific sense impression, it is a false idea.`
-                },
-                mind: {
-                    title: 'On the Mind at Birth',
-                    descartes: `Descartes argued that we are born with innate ideas, or 'blueprints,' placed in our minds by God. These include concepts like God, perfection, and geometric shapes. Our reason allows us to 'unpack' these ideas without ever needing to rely on the unreliable outside world.`,
-                    hume: `Hume championed the idea of the mind as a 'tabula rasa' or blank slate. As "Sophie's World" puts it, "Hume wanted to return to man's spontaneous experience of the world." There are no innate ideas; every thought, belief, and concept is built up from the raw material of sensory experience.`
-                },
-                senses: {
-                    title: 'On the Role of the Senses',
-                    descartes: `The senses are the great deceivers. Descartes pointed out that a stick in water looks bent, but our reason tells us it is straight. Therefore, sensory information must always be subject to the higher authority of rational thought. It cannot be the foundation of knowledge.`,
-                    hume: `For Hume, the senses are everything. They are our only connection to reality. All the contents of our mind, no matter how complex, are ultimately derived from what we have seen, heard, touched, tasted, or smelled. There is no 'knowledge' beyond what the senses provide.`
-                },
-                foundation: {
-                    title: 'On the Path to Certainty',
-                    descartes: `Descartes' method was to systematically doubt everything until he found one thing that could not be doubted: the act of doubting itself. This led to his famous "Cogito, ergo sum" ("I think, therefore I am"), which became the unshakable foundation for his entire philosophy.`,
-                    hume: `Hume believed certainty was an illusion. Knowledge is built by combining simple sense impressions into complex ideas. "Sophie's World" explains his skepticism about concepts like 'causality'—we only see one event following another, we don't 'see' the cause. Our belief is a habit of the mind, not a certainty.`
-                }
-            };
-            
-            if (tableRows.length > 0 && detailsBox) {
-                tableRows.forEach(row => {
-                    row.addEventListener('click', () => {
-                        const concept = row.dataset.concept;
-                        
-                        if (lastSelectedRow === row) {
-                            detailsBox.classList.add('hidden');
-                            row.classList.remove('selected-row');
-                            lastSelectedRow = null;
-                            return;
-                        }
-
-                        if (lastSelectedRow) {
-                            lastSelectedRow.classList.remove('selected-row');
-                        }
-                        
-                        row.classList.add('selected-row');
-                        lastSelectedRow = row;
-
-                        const content = detailsContent[concept];
-                        detailsBox.innerHTML = `
-                            <h4 class="font-bold text-lg mb-2 text-gray-800">${content.title}</h4>
-                            <div class="grid md:grid-cols-2 gap-4">
-                                <div>
-                                    <h5 class="font-semibold text-rose-600 mb-1">Descartes (Rationalist View)</h5>
-                                    <p class="text-sm text-gray-700">${content.descartes}</p>
-                                </div>
-                                <div>
-                                    <h5 class="font-semibold text-sky-600 mb-1">Hume (Empiricist View)</h5>
-                                    <p class="text-sm text-gray-700">${content.hume}</p>
-                                </div>
-                            </div>
-                        `;
-                        detailsBox.classList.remove('hidden');
-                    });
-                });
-            }
-
-            const freudComponents = document.querySelectorAll('.freud-component');
-            const freudDisplay = document.getElementById('freud-display');
-            if (freudComponents.length > 0 && freudDisplay) {
-                freudComponents.forEach(component => {
-                    component.addEventListener('click', () => {
-                        freudDisplay.textContent = component.dataset.text;
-                    });
-                });
-            }
-
-            const sartreButtons = document.querySelectorAll('.sartre-btn');
-            const sartreEssence = document.getElementById('sartre-essence');
-            if (sartreButtons.length > 0 && sartreEssence) {
-                sartreButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        sartreEssence.textContent = `Defined by the choice to be an ${button.textContent.split(' ')[2]}.`;
-                    });
-                });
-            }
-
-            // Abortion stance toggle
-            const stanceToggle = document.getElementById('stance-toggle');
-            const argumentDisplay = document.getElementById('argument-display');
-            const proLifeLabel = document.getElementById('pro-life-label');
-            const proChoiceLabel = document.getElementById('pro-choice-label');
-
-            const proLifeArgs = `
-                <h4 class="font-semibold text-blue-600 mb-2">Pro-Life Arguments</h4>
-                <ul class="list-disc list-inside space-y-2 text-gray-700">
-                    <li><strong>Sanctity of Life:</strong> Human life is sacred from conception to natural death. Abortion is the termination of a human life and is therefore morally wrong.</li>
-                    <li><strong>Potential Personhood:</strong> A fetus has the potential to become a person with full rights, consciousness, and experiences. This potential grants it a right to life from the start.</li>
-                    <li><strong>Sentience Criterion:</strong> If a fetus can feel pain (which some argue can happen at various stages of development), it is morally wrong to cause it suffering and death.</li>
-                </ul>`;
-
-            const proChoiceArgs = `
-                <h4 class="font-semibold text-red-600 mb-2">Pro-Choice Arguments</h4>
-                <ul class="list-disc list-inside space-y-2 text-gray-700">
-                    <li><strong>Bodily Autonomy:</strong> A woman has the fundamental right to control her own body and make decisions about her reproductive health.</li>
-                    <li><strong>Undesirable Consequences of Prohibition:</strong> Banning abortion does not stop it; it leads to unsafe, illegal abortions, harming women's health and increasing social inequality.</li>
-                    <li><strong>Fetal Personhood:</strong> A fetus is not yet a "person" with the same moral and legal rights as a woman. The woman's right to life, health, and well-being takes precedence.</li>
-                </ul>`;
-
-            function updateStanceDisplay() {
-                if(stanceToggle.checked) {
-                    argumentDisplay.innerHTML = proChoiceArgs;
-                    proChoiceLabel.classList.remove('text-gray-400');
-                    proChoiceLabel.classList.add('text-red-600');
-                    proLifeLabel.classList.add('text-gray-400');
-                    proLifeLabel.classList.remove('text-blue-600');
-                } else {
-                    argumentDisplay.innerHTML = proLifeArgs;
-                    proLifeLabel.classList.remove('text-gray-400');
-                    proLifeLabel.classList.add('text-blue-600');
-                    proChoiceLabel.classList.add('text-gray-400');
-                    proChoiceLabel.classList.remove('text-red-600');
-                }
-            }
-
-            if(stanceToggle && argumentDisplay){
-                 stanceToggle.addEventListener('change', updateStanceDisplay);
-                 updateStanceDisplay(); // Initial display
-            }
-
-            // Euthanasia tabs
-            const euthanasiaTabs = document.querySelectorAll('.euthanasia-tab');
-            const euthanasiaContents = document.querySelectorAll('.euthanasia-content');
-
-            if(euthanasiaTabs.length > 0) {
-                euthanasiaTabs.forEach(tab => {
-                    tab.addEventListener('click', () => {
-                        euthanasiaTabs.forEach(item => item.classList.remove('active'));
-                        tab.classList.add('active');
-                        
-                        const targetId = tab.dataset.tab;
-                        euthanasiaContents.forEach(content => {
-                            if (content.id === `euthanasia-${targetId}`) {
-                                content.classList.remove('hidden');
-                            } else {
-                                content.classList.add('hidden');
-                            }
-                        });
-                    });
-                });
-            }
-        });
-    </script>
-</body>
-</html>
 
