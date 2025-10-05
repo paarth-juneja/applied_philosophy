@@ -14,7 +14,7 @@
     <!-- Visualization & Content Choices: 
         - Report Info: Timeline of Philosophy -> Goal: Organize -> Viz/Presentation Method: Sticky Nav Bar & Vertical Sections -> Interaction: Click to scroll -> Justification: Provides clear structure and easy navigation through the content. -> Library/Method: HTML/JS.
         - Report Info: Core tenets of each topic -> Goal: Inform -> Viz/Presentation Method: Expandable content cards -> Interaction: Click to reveal detailed elaboration -> Justification: Manages information density and encourages active engagement. -> Library/Method: HTML/JS.
-        - Report Info: Freud's Models of the Mind -> Goal: Compare/Inform -> Viz/Presentation Method: Two-column layout with static text for the Structural Model and an interactive timeline for the Psychogenetic Model -> Interaction: Click on stages to reveal details -> Justification: Restored the original text for the structural model and combined it with the interactive developmental timeline, presenting both key Freudian concepts side-by-side as requested by the user for a comprehensive overview. -> Library/Method: HTML/JS.
+        - Report Info: Freud's Models of the Mind -> Goal: Compare/Inform -> Viz/Presentation Method: Two-column layout with interactive elements for each model (Iceberg for Structural, Timeline for Psychogenetic) -> Interaction: Click on components to reveal details -> Justification: Restored the original iceberg model and added the requested developmental timeline side-by-side, allowing for a comprehensive and interactive exploration of Freud's theories as requested. -> Library/Method: HTML/JS.
         - Report Info: Arguments for/against Euthanasia -> Goal: Compare -> Viz/Presentation Method: Interactive tabs -> Interaction: Click tabs for 'Arguments For' and 'Arguments Against' -> Justification: Allows for a clear, side-by-side comparison of the core arguments in the euthanasia debate. -> Library/Method: HTML/JS.
         - Report Info: Pro-Life vs. Pro-Choice Arguments -> Goal: Compare -> Viz/Presentation Method: Interactive toggle switch -> Interaction: Click to switch between viewpoints -> Justification: Provides a direct and engaging way to compare two opposing ethical stances. -> Library/Method: HTML/JS.
     -->
@@ -329,13 +329,22 @@
                             <!-- Column 1: Dynamics of the Human Mind -->
                             <div class="p-4 bg-gray-50 rounded-lg">
                                 <h4 class="font-semibold text-center mb-2">Dynamics of the Mind (Structural Model)</h4>
-                                 <p>Freud structured the psyche into three conflicting parts:</p>
-                                <ul class="list-disc list-inside mt-2 space-y-1 text-sm">
+                                <p>Freud structured the psyche into three conflicting parts:</p>
+                                <ul class="list-disc list-inside mt-2 space-y-1">
                                     <li><strong class="text-red-600">Id (Pleasure Principle):</strong> The primitive, instinctual part of the mind containing sexual and aggressive drives. It seeks immediate gratification for all desires, wants, and needs.</li>
                                     <li><strong class="text-blue-600">Ego (Reality Principle):</strong> The rational part of the psyche. It mediates between the unrealistic demands of the id and the external world, ensuring that the id's impulses can be expressed in a manner acceptable in the real world.</li>
                                     <li><strong class="text-yellow-600">Superego (Moral Principle):</strong> The moral conscience, incorporating the values and morals of society which are learned from one's parents and others. It strives for perfection and can punish the ego through feelings of guilt.</li>
                                 </ul>
-                                <p class="mt-3 text-sm">Freud compared the mind to an iceberg. The small tip above the water is the <strong class="text-cyan-500">conscious</strong> mind. The much larger mass below the water is the <strong class="text-indigo-700">unconscious</strong>, which stores our repressed fears, desires, and memories. The preconscious is the area just below the surface, containing memories that are not conscious but can be easily recalled.</p>
+                                <p class="mt-3">Freud compared the mind to an iceberg. The small tip above the water is the <strong class="text-cyan-500">conscious</strong> mind. The much larger mass below the water is the <strong class="text-indigo-700">unconscious</strong>, which stores our repressed fears, desires, and memories. The preconscious is the area just below the surface, containing memories that are not conscious but can be easily recalled.</p>
+                                </div>
+                                <p id="freud-display" class="text-center h-20 bg-white p-2 mt-4 rounded border">Click on the iceberg to learn more.</p>
+                                <div class="relative w-full h-48 mt-4">
+                                    <div class="freud-component absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-1/4 bg-cyan-300 rounded-t-lg cursor-pointer flex items-center justify-center font-bold" data-text="The Conscious mind (Ego) is what we are aware of. It's the tip of the iceberg, mediating with reality.">Conscious</div>
+                                    <div class="freud-component absolute top-1/4 left-1/2 -translate-x-1/2 w-3/4 h-3/4 bg-indigo-300 rounded-b-lg cursor-pointer flex flex-col items-center justify-center p-2 text-center" data-text="The Unconscious is a vast reservoir of repressed thoughts and desires, driven by the Id and policed by the Superego.">
+                                        <div class="font-bold">Unconscious</div>
+                                        <div>(Id, Superego)</div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- Column 2: Psychogenetic Model -->
                              <div class="p-4 bg-gray-50 rounded-lg mt-8 lg:mt-0">
@@ -795,4 +804,261 @@
     </footer>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const toggleButtons = document.querySelectorAll('.toggle-btn');
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const elaboration = button.nextElementSibling;
+                    const isShown = elaboration.classList.toggle('show');
+                    if (!isShown) {
+                        button.textContent = button.textContent.includes('Q&A') ? 'Show Q&A ▼' : (button.textContent.includes('Analyze') ? 'Analyze the Case'+(button.textContent.includes('s') ? 's' : '')+' ▼' : 'Elaborate ▼');
+                    } else {
+                        button.textContent = button.textContent.includes('Q&A') ? 'Hide Q&A ▲' : (button.textContent.includes('Analyze') ? 'Hide Analysis ▲' : 'Collapse ▲');
+                    }
+                });
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section[id]');
+            
+            function onScroll() {
+                let currentSection = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 150) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === currentSection) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', onScroll);
+
+
+            // Interactive Table Logic
+            const tableRows = document.querySelectorAll('.table-row');
+            const detailsBox = document.getElementById('details-box');
+            let lastSelectedRow = null;
+
+            const detailsContent = {
+                knowledge: {
+                    title: 'On the Source of Knowledge',
+                    descartes: `A true rationalist, Descartes believed that reason is the only path to certain knowledge. As "Sophie's World" explains, he could not trust his senses, which could be as deceptive as a dream. True knowledge had to be built upon a foundation of indubitable truths accessible only to the intellect, like the truths of mathematics.`,
+                    hume: `Hume argued that the mind is empty until filled by experience. "Sophie's World" notes his belief that everything we know is composed of 'impressions' (direct sensations) and 'ideas' (faint copies of impressions). If an idea cannot be traced back to a specific sense impression, it is a false idea.`
+                },
+                mind: {
+                    title: 'On the Mind at Birth',
+                    descartes: `Descartes argued that we are born with innate ideas, or 'blueprints,' placed in our minds by God. These include concepts like God, perfection, and geometric shapes. Our reason allows us to 'unpack' these ideas without ever needing to rely on the unreliable outside world.`,
+                    hume: `Hume championed the idea of the mind as a 'tabula rasa' or blank slate. As "Sophie's World" puts it, "Hume wanted to return to man's spontaneous experience of the world." There are no innate ideas; every thought, belief, and concept is built up from the raw material of sensory experience.`
+                },
+                senses: {
+                    title: 'On the Role of the Senses',
+                    descartes: `The senses are the great deceivers. Descartes pointed out that a stick in water looks bent, but our reason tells us it is straight. Therefore, sensory information must always be subject to the higher authority of rational thought. It cannot be the foundation of knowledge.`,
+                    hume: `For Hume, the senses are everything. They are our only connection to reality. All the contents of our mind, no matter how complex, are ultimately derived from what we have seen, heard, touched, tasted, or smelled. There is no 'knowledge' beyond what the senses provide.`
+                },
+                foundation: {
+                    title: 'On the Path to Certainty',
+                    descartes: `Descartes' method was to systematically doubt everything until he found one thing that could not be doubted: the act of doubting itself. This led to his famous "Cogito, ergo sum" ("I think, therefore I am"), which became the unshakable foundation for his entire philosophy.`,
+                    hume: `Hume believed certainty was an illusion. Knowledge is built by combining simple sense impressions into complex ideas. "Sophie's World" explains his skepticism about concepts like 'causality'—we only see one event following another, we don't 'see' the cause. Our belief is a habit of the mind, not a certainty.`
+                }
+            };
+            
+            if (tableRows.length > 0 && detailsBox) {
+                tableRows.forEach(row => {
+                    row.addEventListener('click', () => {
+                        const concept = row.dataset.concept;
+                        
+                        if (lastSelectedRow === row) {
+                            detailsBox.classList.add('hidden');
+                            row.classList.remove('selected-row');
+                            lastSelectedRow = null;
+                            return;
+                        }
+
+                        if (lastSelectedRow) {
+                            lastSelectedRow.classList.remove('selected-row');
+                        }
+                        
+                        row.classList.add('selected-row');
+                        lastSelectedRow = row;
+
+                        const content = detailsContent[concept];
+                        detailsBox.innerHTML = `
+                            <h4 class="font-bold text-lg mb-2 text-gray-800">${content.title}</h4>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <h5 class="font-semibold text-rose-600 mb-1">Descartes (Rationalist View)</h5>
+                                    <p class="text-sm text-gray-700">${content.descartes}</p>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-sky-600 mb-1">Hume (Empiricist View)</h5>
+                                    <p class="text-sm text-gray-700">${content.hume}</p>
+                                </div>
+                            </div>
+                        `;
+                        detailsBox.classList.remove('hidden');
+                    });
+                });
+            }
+
+            
+            const sartreButtons = document.querySelectorAll('.sartre-btn');
+            const sartreEssence = document.getElementById('sartre-essence');
+            if (sartreButtons.length > 0 && sartreEssence) {
+                sartreButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        sartreEssence.textContent = `Defined by the choice to be an ${button.textContent.split(' ')[2]}.`;
+                    });
+                });
+            }
+
+            // Abortion stance toggle
+            const stanceToggle = document.getElementById('stance-toggle');
+            const argumentDisplay = document.getElementById('argument-display');
+            const proLifeLabel = document.getElementById('pro-life-label');
+            const proChoiceLabel = document.getElementById('pro-choice-label');
+
+            const proLifeArgs = `
+                <h4 class="font-semibold text-blue-600 mb-2">Pro-Life Arguments</h4>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong>Sanctity of Life:</strong> Human life is sacred from conception to natural death. Abortion is the termination of a human life and is therefore morally wrong.</li>
+                    <li><strong>Potential Personhood:</strong> A fetus has the potential to become a person with full rights, consciousness, and experiences. This potential grants it a right to life from the start.</li>
+                    <li><strong>Sentience Criterion:</strong> If a fetus can feel pain (which some argue can happen at various stages of development), it is morally wrong to cause it suffering and death.</li>
+                </ul>`;
+
+            const proChoiceArgs = `
+                <h4 class="font-semibold text-red-600 mb-2">Pro-Choice Arguments</h4>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong>Bodily Autonomy:</strong> A woman has the fundamental right to control her own body and make decisions about her reproductive health.</li>
+                    <li><strong>Undesirable Consequences of Prohibition:</strong> Banning abortion does not stop it; it leads to unsafe, illegal abortions, harming women's health and increasing social inequality.</li>
+                    <li><strong>Fetal Personhood:</strong> A fetus is not yet a "person" with the same moral and legal rights as a woman. The woman's right to life, health, and well-being takes precedence.</li>
+                </ul>`;
+
+            function updateStanceDisplay() {
+                if(stanceToggle.checked) {
+                    argumentDisplay.innerHTML = proChoiceArgs;
+                    proChoiceLabel.classList.remove('text-gray-400');
+                    proChoiceLabel.classList.add('text-red-600');
+                    proLifeLabel.classList.add('text-gray-400');
+                    proLifeLabel.classList.remove('text-blue-600');
+                } else {
+                    argumentDisplay.innerHTML = proLifeArgs;
+                    proLifeLabel.classList.remove('text-gray-400');
+                    proLifeLabel.classList.add('text-blue-600');
+                    proChoiceLabel.classList.add('text-gray-400');
+                    proChoiceLabel.classList.remove('text-red-600');
+                }
+            }
+
+            if(stanceToggle && argumentDisplay){
+                 stanceToggle.addEventListener('change', updateStanceDisplay);
+                 updateStanceDisplay(); // Initial display
+            }
+
+            // Euthanasia tabs
+            const euthanasiaTabs = document.querySelectorAll('.euthanasia-tab');
+            const euthanasiaContents = document.querySelectorAll('.euthanasia-content');
+
+            if(euthanasiaTabs.length > 0) {
+                euthanasiaTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        euthanasiaTabs.forEach(item => item.classList.remove('active'));
+                        tab.classList.add('active');
+                        
+                        const targetId = tab.dataset.tab;
+                        euthanasiaContents.forEach(content => {
+                            if (content.id === `euthanasia-${targetId}`) {
+                                content.classList.remove('hidden');
+                            } else {
+                                content.classList.add('hidden');
+                            }
+                        });
+                    });
+                });
+            }
+
+            // Freud's Stages Logic
+            const freudComponents = document.querySelectorAll('.freud-component');
+            const freudDisplay = document.getElementById('freud-display');
+            if (freudComponents.length > 0 && freudDisplay) {
+                freudComponents.forEach(component => {
+                    component.addEventListener('click', () => {
+                        freudDisplay.textContent = component.dataset.text;
+                    });
+                });
+            }
+            
+            const stageButtons = document.querySelectorAll('.stage-btn');
+            const stageDisplay = document.getElementById('stage-display');
+
+            const stageContent = {
+                oral: {
+                    title: 'Oral Stage (Birth to 18 months)',
+                    zone: 'Mouth (sucking, biting)',
+                    conflict: 'Weaning from breast or bottle. Developing trust vs. dependence.',
+                    fixation: 'Overeating, smoking, nail-biting, sarcasm, dependency.'
+                },
+                anal: {
+                    title: 'Anal Stage (18 months to 3 years)',
+                    zone: 'Anus (retention and expulsion)',
+                    conflict: 'Toilet training. Learning self-control and autonomy vs. parental control.',
+                    fixation: 'Anal-retentive (neatness, stinginess, rigidity) or Anal-expulsive (messiness, rebelliousness).'
+                },
+                phallic: {
+                    title: 'Phallic Stage (3 to 5 years)',
+                    zone: 'Genitals',
+                    conflict: 'Oedipus/Electra complex; desire for opposite-sex parent and rivalry with same-sex parent.',
+                    fixation: 'Problems with authority, sexual anxiety, vanity, difficulty with stable relationships.'
+                },
+                latency: {
+                    title: 'Latency Stage (6 to 12 years)',
+                    zone: 'Sexual impulses are latent/dormant.',
+                    conflict: 'Focus on socialization, learning skills, and same-sex friendships.',
+                    fixation: 'Freud believed fixation is rare here; issues usually reflect earlier unresolved conflicts.'
+                },
+                genital: {
+                    title: 'Genital Stage (13 years to adult)',
+                    zone: 'Genitals (mature sexuality)',
+                    conflict: 'Reawakening of sexual interests in the context of mature relationships. Balancing love and work.',
+                    fixation: 'If earlier stages are unresolved, difficulty in forming mature, healthy relationships.'
+                }
+            };
+            
+            function updateStageDisplay(stageKey) {
+                const content = stageContent[stageKey];
+                stageDisplay.innerHTML = `
+                    <h4 class="font-bold text-base mb-2 text-gray-800">${content.title}</h4>
+                    <p><strong>Erogenous Zone:</strong> ${content.zone}</p>
+                    <p><strong>Main Conflict:</strong> ${content.conflict}</p>
+                    <p><strong>Potential Fixation Traits:</strong> ${content.fixation}</p>
+                `;
+
+                stageButtons.forEach(button => {
+                    button.classList.remove('active');
+                    if(button.dataset.stage === stageKey) {
+                        button.classList.add('active');
+                    }
+                });
+            }
+
+            if(stageButtons.length > 0 && stageDisplay) {
+                stageButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        updateStageDisplay(button.dataset.stage);
+                    });
+                });
+                // Initial display
+                updateStageDisplay('oral');
+            }
+        });
+    </script>
+</body>
+</html>
 
