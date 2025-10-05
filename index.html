@@ -100,10 +100,10 @@
             color: #D97706;
             font-weight: 600;
         }
-        .stage-btn {
+        .stage-btn, .sartre-btn-mode {
             transition: all 0.3s ease;
         }
-        .stage-btn.active {
+        .stage-btn.active, .sartre-btn-mode.active {
             background-color: #D97706;
             color: white;
             transform: scale(1.05);
@@ -320,7 +320,7 @@
             <p class="text-center text-gray-600 text-lg mb-10">The Human Condition: Mind, Existence, and Freedom</p>
             <div class="space-y-8">
 
-                <div class="content-card p-6">
+                 <div class="content-card p-6">
                     <h3 class="text-2xl font-semibold mb-3">Sigmund Freud and Psychoanalysis</h3>
                     <p class="mb-4">Freud revolutionized our understanding of the human mind. He proposed that our conscious thoughts and actions are heavily influenced by unconscious desires and conflicts. He developed two key models to explain this: the structural model (Id, Ego, Superego) and the psychogenetic model of development.</p>
                     <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Elaborate ▼</button>
@@ -331,12 +331,10 @@
                                 <h4 class="font-semibold text-center mb-2">Dynamics of the Mind (Structural Model)</h4>
                                 <p>Freud structured the psyche into three conflicting parts:</p>
                                 <ul class="list-disc list-inside mt-2 space-y-1">
-                                    <li><strong class="text-red-600">Id (Pleasure Principle):</strong> The primitive, instinctual part of the mind containing sexual and aggressive drives. It seeks immediate gratification for all desires, wants, and needs.</li>
-                                    <li><strong class="text-blue-600">Ego (Reality Principle):</strong> The rational part of the psyche. It mediates between the unrealistic demands of the id and the external world, ensuring that the id's impulses can be expressed in a manner acceptable in the real world.</li>
-                                    <li><strong class="text-yellow-600">Superego (Moral Principle):</strong> The moral conscience, incorporating the values and morals of society which are learned from one's parents and others. It strives for perfection and can punish the ego through feelings of guilt.</li>
+                                    <li><strong class="text-red-600">Id (Pleasure Principle):</strong> The primitive, instinctual part seeking immediate gratification for all desires.</li>
+                                    <li><strong class="text-blue-600">Ego (Reality Principle):</strong> The rational mediator between the id's demands and the real world.</li>
+                                    <li><strong class="text-yellow-600">Superego (Moral Principle):</strong> The moral conscience, incorporating societal values.</li>
                                 </ul>
-                                <p class="mt-3">Freud compared the mind to an iceberg. The small tip above the water is the <strong class="text-cyan-500">conscious</strong> mind. The much larger mass below the water is the <strong class="text-indigo-700">unconscious</strong>, which stores our repressed fears, desires, and memories. The preconscious is the area just below the surface, containing memories that are not conscious but can be easily recalled.</p>
-                                </div>
                                 <p id="freud-display" class="text-center h-20 bg-white p-2 mt-4 rounded border">Click on the iceberg to learn more.</p>
                                 <div class="relative w-full h-48 mt-4">
                                     <div class="freud-component absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-1/4 bg-cyan-300 rounded-t-lg cursor-pointer flex items-center justify-center font-bold" data-text="The Conscious mind (Ego) is what we are aware of. It's the tip of the iceberg, mediating with reality.">Conscious</div>
@@ -373,20 +371,20 @@
                     <p class="mb-4">Existentialism is a philosophy that emphasizes individual freedom, responsibility, and the subjective experience of life in what is believed to be a meaningless universe. Its most famous slogan, from Sartre, is "existence precedes essence."</p>
                     <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Elaborate ▼</button>
                     <div class="elaboration mt-4 border-t pt-4">
-                        <div class="lg:flex lg:gap-8">
-                            <div class="lg:w-1/2">
-                                <p>This means that humans are born without a pre-defined purpose or nature ("essence"). Unlike a paperknife, which is designed with a purpose (to cut paper) before it is ever created, a human being simply *exists* first. We are "thrown into the world" and then, through our choices and actions, we define who we are. As Sartre said, <strong class="text-green-700">"Man is nothing else but what he makes of himself."</strong></p>
+                        <div class="lg:grid lg:grid-cols-2 lg:gap-8">
+                            <div>
+                                <p>This means that humans are born without a pre-defined purpose or nature ("essence"). Unlike a paperknife, which is designed with a purpose before it is created, a human being simply *exists* first. We are "thrown into the world" and then, through our choices and actions, we define who we are. As Sartre said, <strong class="text-green-700">"Man is nothing else but what he makes of himself."</strong></p>
                                 <p class="mt-2">This radical freedom is also a great burden. We are "condemned to be free," meaning we cannot escape our responsibility to choose. Every choice we make defines not only ourselves but also our vision of what humanity ought to be. To pretend we are not free, to blame our circumstances or our nature, is what Sartre calls <strong class="text-red-700">"bad faith."</strong> Authenticity, in contrast, is courageously accepting our freedom and the total responsibility that comes with it.</p>
                             </div>
-                            <div class="lg:w-1/2 mt-6 lg:mt-0 p-4 bg-gray-50 rounded-lg">
-                                <h4 class="font-semibold text-center mb-2">Case Study: Existence Precedes Essence</h4>
-                                <p class="text-center mb-2">You exist. Now, define your essence through your choices:</p>
+                            <div class="p-4 bg-gray-50 rounded-lg">
+                                <h4 class="font-semibold text-center mb-2">Case Study: Modes of Being</h4>
+                                <p class="text-center mb-2">Sartre distinguished between different ways of existing. Click to explore them:</p>
                                 <div class="flex flex-wrap justify-center gap-2 mb-3">
-                                    <button class="sartre-btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Become an Artist</button>
-                                    <button class="sartre-btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Become a Scientist</button>
-                                    <button class="sartre-btn bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">Become a Teacher</button>
+                                    <button class="sartre-btn-mode bg-gray-200 px-3 py-1 rounded-full text-sm font-semibold" data-mode="in-itself">Being-in-itself</button>
+                                    <button class="sartre-btn-mode bg-gray-200 px-3 py-1 rounded-full text-sm font-semibold" data-mode="for-itself">Being-for-itself</button>
+                                    <button class="sartre-btn-mode bg-gray-200 px-3 py-1 rounded-full text-sm font-semibold" data-mode="for-others">Being-for-others</button>
                                 </div>
-                                <p class="text-center h-20 bg-white p-2 rounded border">Your Essence: <strong id="sartre-essence" class="text-green-700">Undefined</strong></p>
+                                <div id="sartre-display" class="text-sm text-center min-h-[150px] bg-white p-2 rounded border flex items-center justify-center">Select a mode of being to see its explanation.</div>
                             </div>
                         </div>
                     </div>
@@ -908,17 +906,6 @@
                 });
             }
 
-            
-            const sartreButtons = document.querySelectorAll('.sartre-btn');
-            const sartreEssence = document.getElementById('sartre-essence');
-            if (sartreButtons.length > 0 && sartreEssence) {
-                sartreButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        sartreEssence.textContent = `Defined by the choice to be an ${button.textContent.split(' ')[2]}.`;
-                    });
-                });
-            }
-
             // Abortion stance toggle
             const stanceToggle = document.getElementById('stance-toggle');
             const argumentDisplay = document.getElementById('argument-display');
@@ -1056,6 +1043,28 @@
                 });
                 // Initial display
                 updateStageDisplay('oral');
+            }
+
+            // Sartre Modes of Being Logic
+            const sartreModeButtons = document.querySelectorAll('.sartre-btn-mode');
+            const sartreDisplay = document.getElementById('sartre-display');
+
+            const sartreContent = {
+                'in-itself': '<strong>Being-in-itself (en-soi):</strong> This refers to the existence of non-conscious objects, like a rock or a table. They simply *are*. They have a fixed, solid essence, lack freedom, and cannot change what they are. They are full of being, with no potential to be otherwise.',
+                'for-itself': '<strong>Being-for-itself (pour-soi):</strong> This is the mode of existence for conscious beings, like humans. It is defined by freedom, a lack of fixed essence, and the constant possibility of change. We are aware of ourselves, and through our choices, we create who we are. We are a "nothingness" that must constantly define itself.',
+                'for-others': '<strong>Being-for-others (pour-autrui):</strong> This mode of being arises when we become aware that we are being observed by another consciousness (The "Look" of the Other). We experience ourselves as an object in their world, which can lead to feelings of shame or pride. This shapes our identity and can limit our freedom as we begin to see ourselves through others\' eyes.'
+            };
+
+            if(sartreModeButtons.length > 0 && sartreDisplay) {
+                 sartreModeButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const mode = button.dataset.mode;
+                        sartreDisplay.innerHTML = sartreContent[mode];
+
+                        sartreModeButtons.forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                    });
+                });
             }
         });
     </script>
