@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Applied Philosophy</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Importing Chart.js for the World Poverty chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Neutrals -->
-    <!-- Application Structure Plan: The application is structured as a single-page, vertical timeline, progressing chronologically through philosophical periods, then into specific branches of philosophy, and concluding with modern ethical dilemmas like abortion and euthanasia. A sticky navigation bar allows users to jump between these sections. This structure was chosen to logically sequence historical periods and core philosophical branches before applying these concepts to contemporary issues, providing a clear path from foundational theory to practical application. Each topic is presented in a self-contained "card" with a toggle-able "Elaborate" section to manage information density. -->
+    <!-- Application Structure Plan: The application is structured as a single-page, vertical timeline, progressing chronologically through philosophical periods, then into specific branches of philosophy, and concluding with modern ethical dilemmas. A sticky navigation bar allows users to jump between all sections. This structure was chosen to logically sequence historical periods and core philosophical branches before applying these concepts to contemporary issues. Each topic is presented in a self-contained "card" with a toggle-able "Elaborate" section to manage information density. -->
     <!-- Visualization & Content Choices: 
-        - Report Info: Timeline of Philosophy -> Goal: Organize -> Viz/Presentation Method: Sticky Nav Bar & Vertical Sections -> Interaction: Click to scroll -> Justification: Provides clear structure and easy navigation through the content. -> Library/Method: HTML/JS.
-        - Report Info: Core tenets of each topic -> Goal: Inform -> Viz/Presentation Method: Expandable content cards -> Interaction: Click to reveal detailed elaboration -> Justification: Manages information density and encourages active engagement. -> Library/Method: HTML/JS.
-        - Report Info: Freud's Models of the Mind -> Goal: Compare/Inform -> Viz/Presentation Method: Two-column layout with interactive elements for each model (Iceberg for Structural, Timeline for Psychogenetic) -> Interaction: Click on components to reveal details -> Justification: Restored the original iceberg model and added the requested developmental timeline side-by-side, allowing for a comprehensive and interactive exploration of Freud's theories as requested. -> Library/Method: HTML/JS.
-        - Report Info: Arguments for/against Euthanasia -> Goal: Compare -> Viz/Presentation Method: Interactive tabs -> Interaction: Click tabs for 'Arguments For' and 'Arguments Against' -> Justification: Allows for a clear, side-by-side comparison of the core arguments in the euthanasia debate. -> Library/Method: HTML/JS.
+        - Report Info: Timeline of Philosophy -> Goal: Organize -> Viz/Presentation Method: Sticky Nav Bar & Vertical Sections -> Interaction: Click to scroll -> Justification: Provides clear structure and easy navigation. -> Library/Method: HTML/JS.
+        - Report Info: Core tenets of each topic -> Goal: Inform -> Viz/Presentation Method: Expandable content cards -> Interaction: Click to reveal detailed elaboration -> Justification: Manages information density. -> Library/Method: HTML/JS.
+        - Report Info: Freud's Models of the Mind -> Goal: Compare/Inform -> Viz/Presentation Method: Two-column layout with interactive elements for each model. -> Interaction: Click on components to reveal details -> Justification: Presents both of Freud's key theories side-by-side. -> Library/Method: HTML/JS.
+        - Report Info: Global Spending Priorities -> Goal: Compare -> Viz/Presentation Method: Bar Chart -> Interaction: View chart -> Justification: Provides a stark visual comparison of spending on luxuries vs. basic human needs. -> Library/Method: Chart.js.
+        - Report Info: Arguments for/against Euthanasia/Poverty/Free Speech/War -> Goal: Compare -> Viz/Presentation Method: Interactive tabs -> Interaction: Click tabs to switch content -> Justification: Allows for a clear, side-by-side comparison of complex arguments. -> Library/Method: HTML/JS.
         - Report Info: Pro-Life vs. Pro-Choice Arguments -> Goal: Compare -> Viz/Presentation Method: Interactive toggle switch -> Interaction: Click to switch between viewpoints -> Justification: Provides a direct and engaging way to compare two opposing ethical stances. -> Library/Method: HTML/JS.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
@@ -51,7 +53,7 @@
             transition: max-height 1.2s ease-in-out;
         }
         .elaboration.show {
-            max-height: 4500px;
+            max-height: 6000px; /* Increased max-height for large case study sections */
         }
         .comparison-table th, .comparison-table td {
             border: 1px solid #e5e7eb;
@@ -76,6 +78,7 @@
             padding: 1rem;
             border-radius: 0 0 0.5rem 0.5rem;
         }
+        /* Toggle switch for Abortion */
         #stance-toggle:checked ~ #stance-dot {
             transform: translateX(1.5rem);
             background-color: #DC2626;
@@ -89,17 +92,19 @@
         .bg-gray-600 {
              background-color: #DBEAFE;
         }
-        .euthanasia-tab {
+        /* Tabs for Euthanasia and Poverty */
+        .ethics-tab {
             cursor: pointer;
             padding: 8px 16px;
             border-bottom: 2px solid transparent;
             transition: all 0.3s;
         }
-        .euthanasia-tab.active {
+        .ethics-tab.active {
             border-bottom-color: #D97706;
             color: #D97706;
             font-weight: 600;
         }
+        /* Buttons for Freud and Sartre */
         .stage-btn, .sartre-btn-mode {
             transition: all 0.3s ease;
         }
@@ -117,6 +122,7 @@
             <h1 class="text-3xl font-bold text-gray-800">Applied Philosophy</h1>
         </div>
         <div class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200">
+            <!-- Navigation bar with all sections -->
             <nav class="container mx-auto px-6 py-3 justify-center flex flex-wrap gap-x-6 gap-y-2">
                 <a href="#ancient" class="nav-link text-lg font-medium text-gray-600">Ancient</a>
                 <a href="#modern" class="nav-link text-lg font-medium text-gray-600">Modern</a>
@@ -125,8 +131,12 @@
                 <a href="#epistemological" class="nav-link text-lg font-medium text-gray-600">Epistemological</a>
                 <a href="#logical" class="nav-link text-lg font-medium text-gray-600">Logical</a>
                 <a href="#ethical" class="nav-link text-lg font-medium text-gray-600">Ethical</a>
+                <a href="#poverty" class="nav-link text-lg font-medium text-gray-600">World Poverty</a>
                 <a href="#abortion" class="nav-link text-lg font-medium text-gray-600">Abortion</a>
                 <a href="#euthanasia" class="nav-link text-lg font-medium text-gray-600">Euthanasia</a>
+                <a href="#it-quality-of-life" class="nav-link text-lg font-medium text-gray-600">IT & Quality of Life</a>
+                <a href="#internet-democracy" class="nav-link text-lg font-medium text-gray-600">Internet & Democracy</a>
+                <a href="#internet-crimes" class="nav-link text-lg font-medium text-gray-600">Internet Crimes</a>
             </nav>
         </div>
     </header>
@@ -493,7 +503,8 @@
                              <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
                                 <li>Kant agreed with Empiricists that all knowledge begins with sensory experience.</li>
                                 <li>However, he sided with Rationalists by arguing that the mind is not a blank slate. It possesses innate "categories of understanding" (like space, time, causality) that actively structure and organize our sensory perceptions.</li>
-                                <li>In this way, he synthesized both views: knowledge is a product of both sensory input and the mind's inherent organizing principles.</li>
+                                <li>In this way, he synthesized both views:
+knowledge is a product of both sensory input and the mind's inherent organizing principles.</li>
                             </ul>
                         </div>
                     </div>
@@ -581,6 +592,109 @@
             </div>
         </section>
 
+        <!-- WORLD POVERTY -->
+        <section id="poverty" class="mb-20 pt-16">
+            <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">World Poverty</h2>
+            <p class="text-center text-gray-600 text-lg mb-10">A Moral Dilemma</p>
+            <div class="space-y-8">
+                
+                <div class="content-card p-6">
+                    <h3 class="text-2xl font-semibold mb-3">What is World Poverty?</h3>
+                    <p class="mb-4">Poverty is not just a lack of income; it's a network of disadvantages, a "violation of human dignity," and an "inability of getting choices and opportunities." We can distinguish between two main types:</p>
+                    <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Elaborate ▼</button>
+                    <div class="elaboration mt-4 border-t pt-4">
+                        <ul class="list-disc list-inside space-y-2">
+                            <li><strong>Absolute Poverty:</strong> The deprivation of basic human needs, including food, water, sanitation, clothing, shelter, health care, and education. The World Bank has historically defined this as living on less than $1.90 a day. In 2015, this applied to 736 million people.</li>
+                            <li><strong>Relative Poverty:</strong> Defined contextually as economic inequality within a specific society. It measures a person's income or wealth relative to the other members of that society.</li>
+                        </ul>
+                        <p class="mt-4">Our focus here is on the moral dilemma posed by **absolute poverty**.</p>
+                    </div>
+                </div>
+
+                <div class="content-card p-6">
+                    <h3 class="text-2xl font-semibold mb-3">Global Spending Priorities</h3>
+                    <p class="mb-4">One of the central arguments in the poverty debate is that the world has the resources to solve absolute poverty, but chooses to spend them elsewhere. This chart, based on 1998 UN data, illustrates this disparity.</p>
+                    <div class="mt-4 p-4 bg-gray-50 rounded-lg">
+                        <!-- Canvas element for Chart.js -->
+                        <canvas id="povertyChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="content-card p-6">
+                    <h3 class="text-2xl font-semibold mb-3">The Moral Argument: Justice vs. Charity</h3>
+                    <p class="mb-4">What is our moral obligation to help? Philosopher Nigel Dower, in his paper "World Poverty," challenges us to move from a mindset of "charity" to one of "justice."</p>
+                    <!-- Interactive tabs for Poverty section -->
+                    <div class="border-b border-gray-200 mt-4">
+                        <nav class="-mb-px flex space-x-6" aria-label="Tabs">
+                            <button class="ethics-tab active" data-tab="poverty-challenge">The Challenge</button>
+                            <button class="ethics-tab" data-tab="poverty-justice">Justice vs. Charity</button>
+                            <button class="ethics-tab" data-tab="poverty-caring">How Much Caring?</button>
+                        </nav>
+                    </div>
+                    <div id="ethics-poverty-challenge" class="ethics-content mt-4">
+                         <h4 class="font-semibold text-lg text-gray-800">The Challenge</h4>
+                         <p>The core challenge consists of two facts:
+                            <ol class="list-decimal list-inside mt-2">
+                                <li>A thousand million humans (a fifth of the world's population at the time of writing) live in absolute poverty, suffering from malnutrition, high infant mortality, and squalid conditions.</li>
+                                <li>There are many individuals and governments in rich countries with the wealth and resources to help reduce this poverty.</li>
+                            </ol>
+                         </p>
+                         <p class="mt-2">The question is: <strong>Ought those of us who are well off to be doing all we can to help?</strong> Is it a duty, or just a nice thing to do?</p>
+                    </div>
+                    <div id="ethics-poverty-justice" class="ethics-content mt-4 hidden">
+                         <h4 class="font-semibold text-lg text-gray-800">Justice, Not Charity</h4>
+                         <p>Dower argues that "development" should not be seen as a form of "charity."</p>
+                         <ul class="list-disc list-inside mt-2 space-y-2">
+                            <li><strong>Charity:</strong> This implies an optional act of kindness, benevolence, or generosity. We feel good about doing it, but we are not morally required to.</li>
+                            <li><strong>Justice:</strong> This implies a moral obligation or duty. Helping the poor is something that is *required* of us, "whether we feel like it or not." Dower argues that the "ultimate test of 'justice not charity'" is the recognition that the current global economic structures are themselves unjust. The poverty of developing countries can be seen as a result of exploitation and the siphoning of resources (like cheap labor) by developed countries. Therefore, helping is not "giving," but "giving back"—an act of rectification.</li>
+                         </ul>
+                    </div>
+                    <div id="ethics-poverty-caring" class="ethics-content mt-4 hidden">
+                         <h4 class="font-semibold text-lg text-gray-800">How Much Caring?</h4>
+                         <p>Dower concludes that we have a "significant obligation to help," but not one that is "relentless" or "overburdening." He doesn't give a specific percentage, as caring is an "unquantifiable dimension."</p>
+                         <p class="mt-2">Instead, he argues that if we truly appreciate:
+                            <ul class="list-disc list-inside mt-2">
+                                <li>the facts of world poverty,</li>
+                                <li>our global moral identity,</li>
+                                <li>the seriousness of extreme suffering,</li>
+                                <li>and what a good quality of life *really* consists in...</li>
+                            </ul>
+                         </p>
+                         <p class="mt-2">...then "we will care as we ought," consistent with maintaining our *own* quality of life, but not our excesses.</p>
+                    </div>
+                </div>
+
+                <div class="content-card p-6 bg-amber-50 border-amber-200">
+                    <h3 class="text-2xl font-semibold mb-3 text-amber-800">Questions & Answers: World Poverty</h3>
+                    <p class="mb-4">Test your knowledge of the key concepts from the world poverty debate.</p>
+                    <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Show Q&A ▼</button>
+                    <div class="elaboration mt-4 border-t pt-4 space-y-4">
+                        <div>
+                            <p class="font-semibold text-gray-800">Q1: What is the difference between Absolute Poverty and Relative Poverty?</p>
+                            <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
+                                <li><strong>Absolute Poverty</strong> is the deprivation of basic human needs, like food, water, shelter, and healthcare, regardless of location.</li>
+                                <li><strong>Relative Poverty</strong> is defined by a person's economic status compared to others in their *own* society (i.e., economic inequality).</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-800">Q2: What is the "Justice not Charity" argument, according to Nigel Dower?</p>
+                             <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
+                                <li>It is the argument that helping to alleviate world poverty is not an optional act of kindness (charity) but a moral *duty* (justice).</li>
+                                <li>This duty is based on the idea that the existing global system is unjust and that the wealth of rich countries is partially derived from the exploitation of poor countries. Therefore, providing aid is an act of rectification, not generosity.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-800">Q3: How much does Dower argue we should help?</p>
+                             <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
+                                <li>He argues for a "significant obligation," but one that is not "relentless" or "overburdening."</li>
+                                <li>He avoids giving a specific amount, saying instead that "caring is an unquantifiable dimension." He concludes that we should care as much as we can "consistent with our quality of life," implying we should sacrifice luxuries, but not our own well-being.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- ABORTION -->
         <section id="abortion" class="mb-20 pt-16">
             <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">The Abortion Debate</h2>
@@ -643,7 +757,7 @@
                         <div>
                             <p class="font-semibold text-gray-800">Q1: What are the three main arguments used by the "Pro-Life" side?</p>
                             <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
-                                <li><strong>Sanctity of Life:</strong> The belief that human life is sacred from the moment of conception and should never be intentionally terminated.</li>
+                                <li><strong>Sanctity of Life:</strong> The belief that human life is sacred from conception to natural death. Abortion is the termination of a human life and is therefore morally wrong.</li>
                                 <li><strong>Potential Personhood:</strong> The argument that because a fetus has the potential to become a person with full rights, consciousness, and experiences. This potential grants it a right to life from the start.</li>
                                 <li><strong>Sentience Criterion:</strong> The argument that if a fetus can feel pain (which some argue can happen at various stages of development), it is morally wrong to cause it suffering and death.</li>
                             </ul>
@@ -652,7 +766,7 @@
                             <p class="font-semibold text-gray-800">Q2: What are the three main arguments used by the "Pro-Choice" side?</p>
                              <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
                                 <li><strong>Undesirable Consequences:</strong> Prohibiting abortion leads to unsafe, illegal procedures and social inequality for women.</li>
-                                <li><strong>Bodily Autonomy:</strong> Women have a fundamental moral right to make decisions about their own bodies and reproductive health.</li>
+                                <li><strong>Bodily Autonomy:</strong> Women have a fundamental right to make decisions about their own bodies and reproductive health.</li>
                                 <li><strong>Fetal Personhood:</strong> The argument that a fetus is not yet a "person" with full moral rights, and therefore a woman's right to life and well-being takes precedence.</li>
                             </ul>
                         </div>
@@ -669,13 +783,14 @@
                 <div class="content-card p-6">
                     <h3 class="text-2xl font-semibold mb-3">Defining Euthanasia</h3>
                     <p class="mb-4">Euthanasia, or "mercy killing," is the act of intentionally ending a person's life to relieve their suffering. It is a complex ethical issue with several important distinctions. Click the tabs below to explore the main arguments and types.</p>
+                    <!-- Interactive tabs for Euthanasia section -->
                     <div class="border-b border-gray-200">
                         <nav class="-mb-px flex space-x-6" aria-label="Tabs">
-                            <button class="euthanasia-tab active" data-tab="arguments">Arguments</button>
-                            <button class="euthanasia-tab" data-tab="types">Types & Forms</button>
+                            <button class="ethics-tab active" data-tab="euthanasia-arguments">Arguments</button>
+                            <button class="ethics-tab" data-tab="euthanasia-types">Types & Forms</button>
                         </nav>
                     </div>
-                    <div id="euthanasia-arguments" class="euthanasia-content mt-4">
+                    <div id="ethics-euthanasia-arguments" class="ethics-content mt-4">
                         <div class="grid md:grid-cols-2 gap-4">
                             <div class="p-4 bg-green-50 rounded-lg border border-green-200">
                                 <h4 class="font-semibold text-green-800 mb-2">Arguments For Euthanasia</h4>
@@ -693,7 +808,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="euthanasia-types" class="euthanasia-content mt-4 hidden">
+                    <div id="ethics-euthanasia-types" class="ethics-content mt-4 hidden">
                          <ul class="list-disc list-inside space-y-2 text-gray-700">
                             <li><strong>Voluntary:</strong> Performed at the explicit request of a person of sound mind.</li>
                             <li><strong>Non-voluntary:</strong> Performed when a person is unable to give consent (e.g., in a permanent vegetative state).</li>
@@ -747,7 +862,8 @@
                                 <p><strong>Philosophical Analysis:</strong>
                                     <ul class="list-disc list-inside pl-4">
                                         <li><strong>Respect for Autonomy (Kant & Mill):</strong> Both cases are powerful arguments for autonomy. The individuals are rational, have lived full lives, and are making a considered judgment about their own future. Forcing them to live on against their will could be seen as violating their dignity and treating them paternalistically.</li>
-                                         <li><strong>The "Slippery Slope" Argument:</strong> This is the primary counterargument. If society allows euthanasia for a "poor quality of life" or being "tired of life," where does it stop? Critics fear this would devalue the lives of the elderly and disabled, potentially creating subtle pressure on them to choose death to avoid being a "burden." This is a strong utilitarian concern about the potential negative consequences for society as a whole.</li>
+                                         <li><strong>The "Slippery Slope" Argument:</strong> This is the primary counterargument. If society allows euthanasia for a "poor quality of life" or being "tired of life," where does it stop? Critics fear this would devalue the lives of the elderly and disabled,
+potentially creating subtle pressure on them to choose death to avoid being a "burden." This is a strong utilitarian concern about the potential negative consequences for society as a whole.</li>
                                     </ul>
                                 </p>
                                 <p><strong>My Conclusion:</strong> These cases are ethically challenging because the individuals' requests are so rational and sympathetic. However, they represent the most dangerous territory for the "slippery slope." While it seems cruel to deny these specific individuals their wish, creating a legal framework that allows euthanasia based on a subjective "quality of life" assessment for non-terminal individuals is fraught with peril. It could open the door to abuses and devalue the principle of life itself. Society must err on the side of caution, restricting euthanasia to cases of unbearable suffering from terminal illness.</p>
@@ -787,6 +903,234 @@
             </div>
         </section>
 
+        <!-- IT & QUALITY OF LIFE (NEW) -->
+        <section id="it-quality-of-life" class="mb-20 pt-16">
+            <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">IT & Quality of Life</h2>
+            <p class="text-center text-gray-600 text-lg mb-10">The Impact of a Cybernetic Society</p>
+            <div class="space-y-8">
+                <div class="content-card p-6">
+                    <h3 class="text-2xl font-semibold mb-3">Technology and the Digital Divide</h3>
+                    <p class="mb-4">Information Technology (IT) refers to anything related to computing, including hardware, software, and the internet. A society based on this, a "Cybernetic Society," sees combined action between people, machines, and computers. But does this improve our "Quality of Life"—our general well-being?</p>
+                    <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Elaborate ▼</button>
+                    <div class="elaboration mt-4 border-t pt-4">
+                        <p><strong>The Digital Divide:</strong> A key challenge is the "digital divide," the gap between those who have access to modern IT and those who do not. In 2020, only 59% of the global population were active internet users. This divide exists not just between countries but also between:</p>
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                            <li>Economic classes (rich vs. poor)</li>
+                            <li>Educated vs. uneducated populations</li>
+                            <li>Urban vs. rural areas</li>
+                        </ul>
+                         <p class="mt-4">Bridging this gap is crucial because access to IT can enhance learning, provide economic opportunities, and offer vital information for health, careers, and safety.</p>
+                    </div>
+                </div>
+
+                <div class="content-card p-6">
+                    <h3 class="text-2xl font-semibold mb-3">Case Study: Is IT Making Our Brains Lazy?</h3>
+                     <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Analyze the Case ▼</button>
+                    <div class="elaboration mt-4 border-t pt-4 space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-lg text-gray-800">Case Summary</h4>
+                            <p>We are increasingly dependent on spellcheckers, calculators, and search engines. A psychological counsellor, Swati Chatterjee, notes that this is causing our thought processes to deteriorate, limiting our power of observation and analysis. A social scientist, Madhulika Mitra, agrees, stating that while IT has positives, "over dependence on technology is making us lazy" and replacing the "power of imagination" that came from activities like reading books.</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold text-lg text-gray-800">The Core Dilemma</h4>
+                            <p>This case presents a conflict over the value of technology. Is IT an invaluable tool that *augments* our knowledge and "makes life simpler," or is it a crutch that *atrophies* our natural cognitive abilities, like contemplation, memory, and imagination?</p>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold text-lg text-gray-800">Philosophical Analysis</h4>
+                            <ul class="list-disc list-inside mt-2 text-gray-700 space-y-2">
+                                <li><strong>Aristotelian Virtue (Virtue Ethics):</strong> Aristotle believed that we build virtue through habit. If "contemplation" and "analytical process" are intellectual virtues, and we fall out of the *habit* of using them, then IT is arguably diminishing our virtue. By outsourcing our thinking to machines, we are no longer practicing the habits of a virtuous mind.</li>
+                                <li><strong>Socratic View:</strong> In Plato's *Phaedrus*, Socrates expressed a similar fear about the invention of *writing*. He argued it would create "forgetfulness in the learners' souls," as they would trust external marks rather than their own memory. This 2,400-year-old argument is identical to the modern fear of Google. The counter-argument is that writing, like IT, doesn't destroy memory; it *frees* it for higher-level tasks—from mere memorization to complex analysis.</li>
+                                 <li><strong>Utilitarianism (Welfare):</strong> A utilitarian would weigh the outcomes. Does IT produce more good than harm? The "positives" (access to the world's information, global communication, buying daily needs) are immense. The "negatives" (isolation, laziness, loss of imagination) are also significant. The utilitarian conclusion would be to find a balance: use IT to enhance life, but cultivate the "contemplation" and "imagination" that it cannot replace.</li>
+                            </ul>
+                        </div>
+                        <div>
+                           <h4 class="font-semibold text-lg text-gray-800">My Conclusion</h4>
+                            <p>The experts in the case are correct that over-dependence is a problem. However, the technology itself is neutral. It *is* a tool. A spellchecker is a tool, just like a dictionary is a tool. A search engine is a tool, just like a library card catalog is a tool. The problem is not the tool, but the user's *unthinking reliance* on it. The solution is not to abandon the technology but to follow the Socratic advice: "The unexamined life is not worth living." We must be conscious and critical users, using IT to "aid... gaining greater knowledge," not as a substitute for thinking itself.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-card p-6 bg-amber-50 border-amber-200">
+                    <h3 class="text-2xl font-semibold mb-3 text-amber-800">Questions & Answers: IT & Quality of Life</h3>
+                    <p class="mb-4">Test your knowledge of the key concepts from this section.</p>
+                    <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Show Q&A ▼</button>
+                    <div class="elaboration mt-4 border-t pt-4 space-y-4">
+                        <div>
+                            <p class="font-semibold text-gray-800">Q1: What is the "Digital Divide"?</p>
+                            <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
+                                <li>The "digital divide" is the gap between people who have meaningful access to modern information and communication technology (like computers and the internet) and those who do not.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-800">Q2: What is the difference between "Quality of Life" and "Standard of Living"?</p>
+                             <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
+                                <li><strong>Standard of Living</strong> is primarily an economic measure based on income.</li>
+                                <li><strong>Quality of Life</strong> is a much broader term for general well-being, which includes income but also factors like health, education, social belonging, freedom, and happiness.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERNET & DEMOCRACY (NEW) -->
+        <section id="internet-democracy" class="mb-20 pt-16">
+            <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">Democratic Values & The Internet</h2>
+            <p class="text-center text-gray-600 text-lg mb-10">Technology as a Tool for Freedom</p>
+            <div class="space-y-8">
+                <div class="content-card p-6">
+                    <h3 class="text-2xl font-semibold mb-3">The Internet and Democratic Values</h3>
+                    <p class="mb-4">Democracy ("rule of the people") is a form of government built on the values of justice, equality, and freedom. The internet, as a technology, is fundamentally an outcome of the value of freedom. Its open, affordable, and decentralized nature can be a powerful tool for supporting democracy.</p>
+                    <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Elaborate ▼</button>
+                    <div class="elaboration mt-4 border-t pt-4">
+                        <div class="lg:grid lg:grid-cols-2 lg:gap-8">
+                            <div>
+                                <h4 class="font-semibold text-lg text-gray-800">Benefits for Democracy</h4>
+                                <ul class="list-disc list-inside mt-2 space-y-2">
+                                    <li><strong>Freedom of Expression:</strong> Allows citizens to challenge and criticize power, a basic democratic right.</li>
+                                    <li><strong>Transparency:</strong> By putting public data online, governments can become more transparent and accountable.</li>
+                                    <li><strong>Informed Citizens:</strong> Free and open access to online news helps people become better informed on current affairs.</li>
+                                    <li><strong>Political Participation:</strong> Social media can help organize and bring about democratic change.</li>
+                                </ul>
+                            </div>
+                            <div class="mt-4 lg:mt-0">
+                                <h4 class="font-semibold text-lg text-gray-800">Troublesome Issues</h4>
+                                <ul class="list-disc list-inside mt-2 space-y-2">
+                                    <li><strong>Accessibility:</strong> The digital divide means not everyone has equal access.</li>
+                                    <li><strong>Data Security:</strong> Concerns over data storage, security, and violation of privacy.</li>
+                                    <li><strong>Misinformation:</strong> The spread of "fake news" and the difficulty of verifying data.</li>
+                                    <li><strong>Intolerance:</strong> The internet can also be a platform for intolerance, not just open debate.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card p-6">
+                    <h3 class="text-2xl font-semibold mb-3">Case Studies: The Internet & Well-Being</h3>
+                     <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Analyze the Cases ▼</button>
+                    <div class="elaboration mt-4 border-t pt-4 space-y-4">
+                        <!-- Case Study 1: University Virus -->
+                        <div class="p-4 border-b">
+                            <h4 class="font-semibold text-lg text-gray-800">Case 1: The "Harmless" University Virus</h4>
+                             <p class="mt-2 text-sm"><strong>Summary:</strong> Your friend is creating a "harmless" worm that will display "Let's party!" on all university workstations on a Friday at 3 pm, then erase itself by 4 pm. What would you say or do?</p>
+                             <p class="mt-2 text-sm"><strong>The Core Dilemma:</strong> This is a conflict between loyalty to a friend (a personal value) and the ethical duty to prevent harm (a social value). Is a "harmless" prank that involves unauthorized access still a wrongful act?</p>
+                             <div class="mt-2 text-sm space-y-2">
+                                <p><strong>Philosophical Analysis:</strong>
+                                    <ul class="list-disc list-inside pl-4">
+                                        <li><strong>Deontology (Kant):</strong> The friend's action is fundamentally immoral. His maxim would be, "It is acceptable to gain unauthorized access to a computer system if my intention is harmless." This cannot be universalized; if everyone did this, the very concepts of security, privacy, and property would collapse. He is also treating the university (and its IT staff, who will have to investigate) as a *mere means* to his end (a prank).</li>
+                                        <li><strong>Utilitarianism (Mill):</strong> The friend believes his action will produce a small amount of "pleasure" (a party message) and no "pain" (it's "harmless"). This is a bad calculation. The potential negative consequences are huge: the worm could have an unforeseen bug, it could crash critical systems (like exam databases or research projects), and it will cause panic and waste the time of IT staff. The potential pain (high) far outweighs the potential pleasure (low).</li>
+                                    </ul>
+                                </p>
+                                <p><strong>My Conclusion:</strong> The action is unethical. I would have a moral duty to intervene. The first step would be to try to persuade my friend not to do it, using the arguments above. If he refused, I would be ethically obligated to report him to the university administration. The Kantian duty to uphold the rules of a just system (respect for property and security) and the utilitarian duty to prevent a large, foreseeable harm outweigh my personal loyalty to my friend.</p>
+                            </div>
+                        </div>
+                        <!-- Case Study 2 & 3: Media and Mental Health -->
+                         <div class="p-4">
+                            <h4 class="font-semibold text-lg text-gray-800">Case 2 & 3: Bedtime Media & Facebook for Anxiety</h4>
+                             <p class="mt-2 text-sm"><strong>Summary:</strong> One study finds that *long* media use before bed is associated with less sleep. However, *short, focused* media use (like listening to music) in bed is associated with *more* sleep. A second study finds that students who read supportive "likes" and comments on Facebook before an exam reduced their anxiety and performed better.</p>
+                             <p class="mt-2 text-sm"><strong>The Core Dilemma:</strong> Is technology an inherent source of anxiety and distraction, or is it a neutral tool whose impact depends entirely on *how* we use it?</p>
+                             <div class="mt-2 text-sm space-y-2">
+                                <p><strong>Philosophical Analysis:</strong>
+                                    <ul class="list-disc list-inside pl-4">
+                                        <li><strong>Aristotelian Virtue (Virtue Ethics):</strong> These cases are a perfect example of Aristotle's "Golden Mean." Technology use is not a simple good or bad. The *excess* (long, multitasking media use) is a vice that leads to less sleep. The *deficiency* (no media) might be fine, but the *mean* (a short, focused, purposeful session) is a virtue that can actually improve well-being.</li>
+                                        <li><strong>Utilitarianism (Welfare):</strong> These cases show how to maximize welfare using IT. The goal is to maximize pleasure (reduced anxiety, better sleep) and minimize pain (anxiety, insomnia). The Facebook study is a clear utilitarian win: a small, low-cost action (posting for support) produced a significant increase in well-being and performance for a large group (anxious students).</li>
+                                    </ul>
+                                </p>
+                                <p><strong>My Conclusion:</strong> These studies demonstrate that technology is not a monolithic good or bad. It is a powerful tool that must be used with virtue and wisdom. The "Bedtime" case shows that *temperance* is key—using media in moderation and with a clear purpose. The "Facebook" case shows that IT can be a powerful tool for fostering "social belonging," a key indicator of quality of life. The impact of IT is not in the technology; it's in our *habits*.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card p-6 bg-amber-50 border-amber-200">
+                    <h3 class="text-2xl font-semibold mb-3 text-amber-800">Questions & Answers: Internet & Democracy</h3>
+                    <p class="mb-4">Test your knowledge of the key concepts from this section.</p>
+                    <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Show Q&A ▼</button>
+                    <div class="elaboration mt-4 border-t pt-4 space-y-4">
+                        <div>
+                            <p class="font-semibold text-gray-800">Q1: What are two main *benefits* the internet can have for democracy?</p>
+                            <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
+                                <li>It allows for greater **freedom of expression**, helping citizens criticize power and organize.</li>
+                                <li>It can lead to greater government **transparency and accountability** by putting public data online.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-800">Q2: What are two main *troublesome issues* or risks the internet poses to democratic values?</p>
+                             <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
+                                <li><strong>The Digital Divide** (unequal access) violates the value of equality.</li>
+                                <li>The spread of **"fake news" and misinformation** can poison public debate and harm the value of justice.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOCIETY & INTERNET CRIMES (NEW) -->
+        <section id="internet-crimes" class="mb-20 pt-16">
+            <h2 class="text-3xl font-bold text-center mb-2 text-gray-800">Society & Internet Crimes</h2>
+            <p class="text-center text-gray-600 text-lg mb-10">The Ethics of a Cybernetic Society</p>
+            <div class="space-y-8">
+                <div class="content-card p-6">
+                    <h3 class="text-2xl font-semibold mb-3">The Cybernetic Society: Use and Misuse</h3>
+                    <p class="mb-4">A "Cybernetic Society" is defined by the combined action of people, machines, and computers. This alliance, built on IT, has many advantages (e-commerce, research, global communication) but also disadvantages, including the rise of internet crimes.</p>
+                    <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Elaborate ▼</button>
+                    <div class="elaboration mt-4 border-t pt-4">
+                        <p>The core of the problem lies in the values of **privacy** and **anonymity**. Computer users want to protect their identity and work, but this same anonymity allows criminals to act. This creates a range of "troublesome issues" that are ethical or legal violations.</p>
+                        <h4 class="font-semibold text-lg text-gray-800 mt-4">Types of Internet Crimes</h4>
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                            <li><strong>Violation of Privacy:</strong> The unauthorized access to or use of someone's personal data.</li>
+                            <li><strong>Hacking vs. Cracking:</strong> Hackers test the limits of a system, whereas Crackers (a term for malicious hackers) intend to cause system problems or steal.</li>
+                            <li><strong>Viruses and Worms:</strong> A virus is malicious code that needs human help to spread, while a worm can propagate on its own, for example, by emailing itself to a user's contacts.</li>
+                            <li><strong>Software Piracy:</strong> The illegal copying or distribution of software, a violation of intellectual property.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="content-card p-6">
+                    <h3 class="text-2xl font-semibold mb-3">The Computer User and Moral Responsibility</h3>
+                    <p class="mb-4">Given the risks of internet crime, what is our ethical duty? The concept of "Moral Responsibility" in a cybernetic society is defined as "a way of living one’s life through values and virtues, representing a strong mental condition of owning other computer users’ claims to live a virtuous or good human life."</p>
+                    <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Elaborate ▼</button>
+                    <div class="elaboration mt-4 border-t pt-4">
+                        <p>This is an Aristotelian (Virtue Ethics) approach. It argues that a safe and just internet is not just about laws; it's about the *character* of the users.</p>
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                            <li>It requires the "cultivation of values and corresponding virtues" such as **truth, courage, fairness, and compassion.**</li>
+                            <li>The goal is to develop a "collective moral awareness" and a "sense of respect for the dignity and well-being of other computer users."</li>
+                            <li>This is especially true for the "alpha men"—the constructive, creative leaders of the cybernetic society (e.g., programmers, tech leaders, influencers)—who have a greater responsibility due to their power and influence.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="content-card p-6 bg-amber-50 border-amber-200">
+                    <h3 class="text-2xl font-semibold mb-3 text-amber-800">Questions & Answers: Society & Internet Crimes</h3>
+                    <p class="mb-4">Test your knowledge of the key concepts from this section.</p>
+                    <button class="toggle-btn font-semibold text-amber-600 hover:text-amber-800">Show Q&A ▼</button>
+                    <div class="elaboration mt-4 border-t pt-4 space-y-4">
+                        <div>
+                            <p class="font-semibold text-gray-800">Q1: What is a "Cybernetic Society"?</p>
+                            <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
+                                <li>It represents the use of Information Technology in the combined action of people, machines, and computers, based on the alliance of industry with science and technology.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-800">Q2: What is the difference between a Virus and a Worm?</p>
+                             <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
+                                <li>A **Virus** is a malicious program that needs human intervention to spread (e.g., you have to open an infected email attachment).</li>
+                                <li>A **Worm** is a malicious program that can propagate by itself, without human intervention (e.g., by sending copies of itself to other computers automatically).</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-800">Q3: What is the "Moral Responsibility" of a computer user?</p>
+                             <ul class="list-disc list-inside mt-2 text-gray-700 space-y-1">
+                                <li>It is a (Virtue Ethics-based) concept of living one's life through virtues like truth, fairness, and compassion. It means having a "strong mental condition of owning other computer users’ claims to live a virtuous or good human life" and respecting their dignity and well-being.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <div class="text-center mt-16">
             <a href="#top" class="inline-block bg-gray-200 text-gray-700 font-semibold py-2 px-6 rounded-lg hover:bg-gray-300 transition-colors">
                 ↑ Back to Top
@@ -801,22 +1145,27 @@
         </div>
     </footer>
 
+    <!-- Main JavaScript for all interactivity -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
+            // --- 1. Accordion Toggle Logic (for all sections) ---
             const toggleButtons = document.querySelectorAll('.toggle-btn');
             toggleButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const elaboration = button.nextElementSibling;
                     const isShown = elaboration.classList.toggle('show');
                     if (!isShown) {
+                        // Reset button text on close
                         button.textContent = button.textContent.includes('Q&A') ? 'Show Q&A ▼' : (button.textContent.includes('Analyze') ? 'Analyze the Case'+(button.textContent.includes('s') ? 's' : '')+' ▼' : 'Elaborate ▼');
                     } else {
+                        // Set button text on open
                         button.textContent = button.textContent.includes('Q&A') ? 'Hide Q&A ▲' : (button.textContent.includes('Analyze') ? 'Hide Analysis ▲' : 'Collapse ▲');
                     }
                 });
             });
 
+            // --- 2. Sticky Nav Scroll Logic ---
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('section[id]');
             
@@ -824,7 +1173,7 @@
                 let currentSection = '';
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
-                    if (pageYOffset >= sectionTop - 150) {
+                    if (pageYOffset >= sectionTop - 150) { // 150px offset for better activation
                         currentSection = section.getAttribute('id');
                     }
                 });
@@ -836,11 +1185,9 @@
                     }
                 });
             }
-
             window.addEventListener('scroll', onScroll);
 
-
-            // Interactive Table Logic
+            // --- 3. Modern Philosophy: Rationalism vs. Empiricism Table ---
             const tableRows = document.querySelectorAll('.table-row');
             const detailsBox = document.getElementById('details-box');
             let lastSelectedRow = null;
@@ -906,72 +1253,7 @@
                 });
             }
 
-            // Abortion stance toggle
-            const stanceToggle = document.getElementById('stance-toggle');
-            const argumentDisplay = document.getElementById('argument-display');
-            const proLifeLabel = document.getElementById('pro-life-label');
-            const proChoiceLabel = document.getElementById('pro-choice-label');
-
-            const proLifeArgs = `
-                <h4 class="font-semibold text-blue-600 mb-2">Pro-Life Arguments</h4>
-                <ul class="list-disc list-inside space-y-2 text-gray-700">
-                    <li><strong>Sanctity of Life:</strong> Human life is sacred from conception to natural death. Abortion is the termination of a human life and is therefore morally wrong.</li>
-                    <li><strong>Potential Personhood:</strong> A fetus has the potential to become a person with full rights, consciousness, and experiences. This potential grants it a right to life from the start.</li>
-                    <li><strong>Sentience Criterion:</strong> If a fetus can feel pain (which some argue can happen at various stages of development), it is morally wrong to cause it suffering and death.</li>
-                </ul>`;
-
-            const proChoiceArgs = `
-                <h4 class="font-semibold text-red-600 mb-2">Pro-Choice Arguments</h4>
-                <ul class="list-disc list-inside space-y-2 text-gray-700">
-                    <li><strong>Bodily Autonomy:</strong> A woman has the fundamental right to control her own body and make decisions about her reproductive health.</li>
-                    <li><strong>Undesirable Consequences of Prohibition:</strong> Banning abortion does not stop it; it leads to unsafe, illegal abortions, harming women's health and increasing social inequality.</li>
-                    <li><strong>Fetal Personhood:</strong> A fetus is not yet a "person" with the same moral and legal rights as a woman. The woman's right to life, health, and well-being takes precedence.</li>
-                </ul>`;
-
-            function updateStanceDisplay() {
-                if(stanceToggle.checked) {
-                    argumentDisplay.innerHTML = proChoiceArgs;
-                    proChoiceLabel.classList.remove('text-gray-400');
-                    proChoiceLabel.classList.add('text-red-600');
-                    proLifeLabel.classList.add('text-gray-400');
-                    proLifeLabel.classList.remove('text-blue-600');
-                } else {
-                    argumentDisplay.innerHTML = proLifeArgs;
-                    proLifeLabel.classList.remove('text-gray-400');
-                    proLifeLabel.classList.add('text-blue-600');
-                    proChoiceLabel.classList.add('text-gray-400');
-                    proChoiceLabel.classList.remove('text-red-600');
-                }
-            }
-
-            if(stanceToggle && argumentDisplay){
-                 stanceToggle.addEventListener('change', updateStanceDisplay);
-                 updateStanceDisplay(); // Initial display
-            }
-
-            // Euthanasia tabs
-            const euthanasiaTabs = document.querySelectorAll('.euthanasia-tab');
-            const euthanasiaContents = document.querySelectorAll('.euthanasia-content');
-
-            if(euthanasiaTabs.length > 0) {
-                euthanasiaTabs.forEach(tab => {
-                    tab.addEventListener('click', () => {
-                        euthanasiaTabs.forEach(item => item.classList.remove('active'));
-                        tab.classList.add('active');
-                        
-                        const targetId = tab.dataset.tab;
-                        euthanasiaContents.forEach(content => {
-                            if (content.id === `euthanasia-${targetId}`) {
-                                content.classList.remove('hidden');
-                            } else {
-                                content.classList.add('hidden');
-                            }
-                        });
-                    });
-                });
-            }
-
-            // Freud's Stages Logic
+            // --- 4. Contemporary: Freud's Structural (Iceberg) Model ---
             const freudComponents = document.querySelectorAll('.freud-component');
             const freudDisplay = document.getElementById('freud-display');
             if (freudComponents.length > 0 && freudDisplay) {
@@ -982,6 +1264,7 @@
                 });
             }
             
+            // --- 5. Contemporary: Freud's Psychogenetic (Stages) Model ---
             const stageButtons = document.querySelectorAll('.stage-btn');
             const stageDisplay = document.getElementById('stage-display');
 
@@ -1019,6 +1302,7 @@
             };
             
             function updateStageDisplay(stageKey) {
+                if (!stageDisplay) return;
                 const content = stageContent[stageKey];
                 stageDisplay.innerHTML = `
                     <h4 class="font-bold text-base mb-2 text-gray-800">${content.title}</h4>
@@ -1041,11 +1325,10 @@
                         updateStageDisplay(button.dataset.stage);
                     });
                 });
-                // Initial display
-                updateStageDisplay('oral');
+                updateStageDisplay('oral'); // Initial display
             }
 
-            // Sartre Modes of Being Logic
+            // --- 6. Contemporary: Sartre's "Modes of Being" ---
             const sartreModeButtons = document.querySelectorAll('.sartre-btn-mode');
             const sartreDisplay = document.getElementById('sartre-display');
 
@@ -1060,14 +1343,152 @@
                     button.addEventListener('click', () => {
                         const mode = button.dataset.mode;
                         sartreDisplay.innerHTML = sartreContent[mode];
-
                         sartreModeButtons.forEach(btn => btn.classList.remove('active'));
                         button.classList.add('active');
                     });
+                });
+            }
+
+            // --- 7. Abortion: Pro-Life/Pro-Choice Toggle ---
+            const stanceToggle = document.getElementById('stance-toggle');
+            const argumentDisplay = document.getElementById('argument-display');
+            const proLifeLabel = document.getElementById('pro-life-label');
+            const proChoiceLabel = document.getElementById('pro-choice-label');
+
+            const proLifeArgs = `
+                <h4 class="font-semibold text-blue-600 mb-2">Pro-Life Arguments</h4>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong>Sanctity of Life:</strong> Human life is sacred from conception to natural death. Abortion is the termination of a human life and is therefore morally wrong.</li>
+                    <li><strong>Potential Personhood:</strong> A fetus has the potential to become a person with full rights, consciousness, and experiences. This potential grants it a right to life from the start.</li>
+                    <li><strong>Sentience Criterion:</strong> If a fetus can feel pain (which some argue can happen at various stages of development), it is morally wrong to cause it suffering and death.</li>
+                </ul>`;
+
+            const proChoiceArgs = `
+                <h4 class="font-semibold text-red-600 mb-2">Pro-Choice Arguments</h4>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong>Bodily Autonomy:</strong> A woman has the fundamental right to control her own body and make decisions about her reproductive health.</li>
+                    <li><strong>Undesirable Consequences of Prohibition:</strong> Banning abortion does not stop it; it leads to unsafe, illegal abortions, harming women's health and increasing social inequality.</li>
+                    <li><strong>Fetal Personhood:</strong> A fetus is not yet a "person" with the same moral and legal rights as a woman. The woman's right to life, health, and well-being takes precedence.</li>
+                </ul>`;
+
+            function updateStanceDisplay() {
+                if(stanceToggle && stanceToggle.checked) {
+                    argumentDisplay.innerHTML = proChoiceArgs;
+                    proChoiceLabel.classList.remove('text-gray-400');
+                    proChoiceLabel.classList.add('text-red-600');
+                    proLifeLabel.classList.add('text-gray-400');
+                    proLifeLabel.classList.remove('text-blue-600');
+                } else if(argumentDisplay) {
+                    argumentDisplay.innerHTML = proLifeArgs;
+                    proLifeLabel.classList.remove('text-gray-400');
+                    proLifeLabel.classList.add('text-blue-600');
+                    proChoiceLabel.classList.add('text-gray-400');
+                    proChoiceLabel.classList.remove('text-red-600');
+                }
+            }
+
+            if(stanceToggle && argumentDisplay){
+                 stanceToggle.addEventListener('change', updateStanceDisplay);
+                 updateStanceDisplay(); // Initial display
+            }
+
+            // --- 8. Ethics Tab Logic (for Poverty & Euthanasia) ---
+            const ethicsTabs = document.querySelectorAll('.ethics-tab');
+            
+            if(ethicsTabs.length > 0) {
+                ethicsTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const tabGroup = tab.closest('.content-card'); // Find the parent card
+                        
+                        tabGroup.querySelectorAll('.ethics-tab').forEach(item => item.classList.remove('active'));
+                        tab.classList.add('active');
+                        
+                        const targetId = `ethics-${tab.dataset.tab}`;
+                        
+                        tabGroup.querySelectorAll('.ethics-content').forEach(content => {
+                            if (content.id === targetId) {
+                                content.classList.remove('hidden');
+                            } else {
+                                content.classList.add('hidden');
+                            }
+                        });
+                    });
+                });
+            }
+
+            // --- 9. World Poverty: Chart.js Logic ---
+            const ctx = document.getElementById('povertyChart');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: [
+                            'Cosmetics (US)', 
+                            'Ice Cream (Europe)', 
+                            'Perfumes (US/Europe)', 
+                            'Pet Food (US/Europe)', 
+                            'Cigarettes (Europe)', 
+                            'Alcohol (Europe)', 
+                            'Narcotics (World)', 
+                            'Military (World)',
+                            'Basic Education (Needed)',
+                            'Water/Sanitation (Needed)',
+                            'Reproductive Health (Needed)',
+                            'Basic Health (Needed)'
+                        ],
+                        datasets: [{
+                            label: 'Global Spending (in $US Billions)',
+                            data: [8, 11, 12, 17, 50, 105, 400, 780, 0, 0, 0, 0],
+                            backgroundColor: 'rgba(217, 119, 6, 0.6)', // Amber
+                            borderColor: 'rgba(217, 119, 6, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Additional Cost for Basic Needs (in $US Billions)',
+                            data: [0, 0, 0, 0, 0, 0, 0, 0, 6, 9, 12, 13],
+                            backgroundColor: 'rgba(37, 99, 235, 0.6)', // Blue
+                            borderColor: 'rgba(37, 99, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                stacked: true,
+                                title: {
+                                    display: true,
+                                    text: '$US Billions'
+                                }
+                            },
+                            x: {
+                                stacked: true
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y) + ' Billion';
+                                        }
+                                        return label;
+                                    }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Global Priorities in Spending (1998 UN Data)'
+                            }
+                        }
+                    }
                 });
             }
         });
     </script>
 </body>
 </html>
-
