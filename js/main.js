@@ -268,78 +268,7 @@
         });
     }
 
-    // --- 9. World Poverty: Chart.js Logic ---
-    const ctx = document.getElementById('povertyChart');
-    if (ctx) {
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: [
-                    'Cosmetics (US)',
-                    'Ice Cream (Europe)',
-                    'Perfumes (US/Europe)',
-                    'Pet Food (US/Europe)',
-                    'Cigarettes (Europe)',
-                    'Alcohol (Europe)',
-                    'Narcotics (World)',
-                    'Military (World)',
-                    'Basic Education (Needed)',
-                    'Water/Sanitation (Needed)',
-                    'Reproductive Health (Needed)',
-                    'Basic Health (Needed)'
-                ],
-                datasets: [{
-                    label: 'Global Spending (in $US Billions)',
-                    data: [8, 11, 12, 17, 50, 105, 400, 780, 0, 0, 0, 0],
-                    backgroundColor: 'rgba(217, 119, 6, 0.6)',
-                    borderColor: 'rgba(217, 119, 6, 1)',
-                    borderWidth: 1
-                },
-                {
-                    label: 'Additional Cost for Basic Needs (in $US Billions)',
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 6, 9, 12, 13],
-                    backgroundColor: 'rgba(37, 99, 235, 0.6)',
-                    borderColor: 'rgba(37, 99, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        stacked: true,
-                        title: {
-                            display: true,
-                            text: '$US Billions'
-                        }
-                    },
-                    x: {
-                        stacked: true
-                    }
-                },
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed.y !== null) {
-                                    label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y) + ' Billion';
-                                }
-                                return label;
-                            }
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: 'Global Priorities in Spending (1998 UN Data)'
-                    }
-                }
-            }
-        });
-    }
+
 
     console.log('Applied Philosophy interactivity initialized successfully!');
 })();
