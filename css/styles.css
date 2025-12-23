@@ -1,0 +1,116 @@
+/* Applied Philosophy - Main Styles */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #FDFBF8;
+    color: #383838;
+}
+
+.nav-link {
+    transition: all 0.3s ease;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-link.active,
+.nav-link:hover {
+    color: #D97706;
+    border-bottom-color: #D97706;
+}
+
+.content-card {
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.content-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.elaboration {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1.2s ease-in-out;
+}
+
+.elaboration.show {
+    max-height: 6000px;
+}
+
+.comparison-table th,
+.comparison-table td {
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.comparison-table .concept-col {
+    background-color: #f9fafb;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.comparison-table .concept-col:hover {
+    background-color: #f3f4f6;
+}
+
+.comparison-table .selected-row {
+    background-color: #FEF3C7;
+}
+
+.detail-box {
+    background-color: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-top: none;
+    padding: 1rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+}
+
+/* Toggle switch for Abortion */
+#stance-toggle:checked~#stance-dot {
+    transform: translateX(1.5rem);
+    background-color: #DC2626;
+}
+
+#stance-toggle:checked~.bg-gray-600 {
+    background-color: #FEE2E2;
+}
+
+#stance-dot {
+    background-color: #3B82F6;
+}
+
+.bg-gray-600 {
+    background-color: #DBEAFE;
+}
+
+/* Tabs for Euthanasia and Poverty */
+.ethics-tab {
+    cursor: pointer;
+    padding: 8px 16px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+.ethics-tab.active {
+    border-bottom-color: #D97706;
+    color: #D97706;
+    font-weight: 600;
+}
+
+/* Buttons for Freud and Sartre */
+.stage-btn,
+.sartre-btn-mode {
+    transition: all 0.3s ease;
+}
+
+.stage-btn.active,
+.sartre-btn-mode.active {
+    background-color: #D97706;
+    color: white;
+    transform: scale(1.05);
+}
