@@ -1,10 +1,9 @@
-const CACHE_NAME = 'applied-philosophy-v1';
+const CACHE_NAME = 'applied-philosophy-v2';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
     '/css/styles.css',
     '/js/main.js',
-    'https://cdn.tailwindcss.com',
     'https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js',
     'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap'
 ];
@@ -14,10 +13,10 @@ const isValidRequest = (request) => {
     const url = new URL(request.url);
     // Cache our own origin and specific CDNs
     return url.origin === self.location.origin ||
-           url.hostname === 'cdn.tailwindcss.com' ||
-           url.hostname === 'cdn.jsdelivr.net' ||
-           url.hostname === 'fonts.googleapis.com' ||
-           url.hostname === 'fonts.gstatic.com';
+        url.hostname === 'cdn.tailwindcss.com' ||
+        url.hostname === 'cdn.jsdelivr.net' ||
+        url.hostname === 'fonts.googleapis.com' ||
+        url.hostname === 'fonts.gstatic.com';
 };
 
 self.addEventListener('install', (event) => {

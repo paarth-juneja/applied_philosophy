@@ -17,7 +17,15 @@
     <script>
         window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
-    <script defer src="/_vercel/insights/script.js"></script>
+    <script>
+        // Only load Vercel Analytics in production
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+            var script = document.createElement('script');
+            script.defer = true;
+            script.src = "/_vercel/insights/script.js";
+            document.head.appendChild(script);
+        }
+    </script>
 </head>
 
 <body id="top" class="antialiased">
@@ -115,11 +123,11 @@
         // Load all sections
         async function loadSections() {
             const container = document.getElementById('sections-container');
-            
+
             try {
                 // Fetch all sections in parallel
                 const responses = await Promise.all(
-                    sections.map(sectionPath => 
+                    sections.map(sectionPath =>
                         fetch(sectionPath)
                             .then(res => {
                                 if (res.ok) return res.text();
@@ -134,7 +142,7 @@
 
                 // Append all content efficiently
                 container.innerHTML = responses.join('');
-                
+
                 // After all sections are loaded, initialize the main JavaScript
                 initializeInteractivity();
 
