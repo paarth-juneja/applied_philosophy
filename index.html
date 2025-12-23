@@ -82,6 +82,19 @@
 
     <!-- Section Loader Script -->
     <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+
         // List of all section files to load
         const sections = [
             'sections/ancient.html',
@@ -102,23 +115,32 @@
         // Load all sections
         async function loadSections() {
             const container = document.getElementById('sections-container');
+            
+            try {
+                // Fetch all sections in parallel
+                const responses = await Promise.all(
+                    sections.map(sectionPath => 
+                        fetch(sectionPath)
+                            .then(res => {
+                                if (res.ok) return res.text();
+                                throw new Error(`Failed to load ${sectionPath}: ${res.status}`);
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                return `<div class="text-red-500 p-4">Error loading section: ${sectionPath}</div>`;
+                            })
+                    )
+                );
 
-            for (const sectionPath of sections) {
-                try {
-                    const response = await fetch(sectionPath);
-                    if (response.ok) {
-                        const html = await response.text();
-                        container.innerHTML += html;
-                    } else {
-                        console.error(`Failed to load ${sectionPath}: ${response.status}`);
-                    }
-                } catch (error) {
-                    console.error(`Error loading ${sectionPath}:`, error);
-                }
+                // Append all content efficiently
+                container.innerHTML = responses.join('');
+                
+                // After all sections are loaded, initialize the main JavaScript
+                initializeInteractivity();
+
+            } catch (error) {
+                console.error('Critical error loading sections:', error);
             }
-
-            // After all sections are loaded, initialize the main JavaScript
-            initializeInteractivity();
         }
 
         // Initialize all interactive functionality after sections are loaded
