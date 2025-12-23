@@ -1,4 +1,4 @@
-const CACHE_NAME = 'applied-philosophy-v2';
+const CACHE_NAME = 'applied-philosophy-v3';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
